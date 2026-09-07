@@ -546,3 +546,251 @@ Only `Working_Memo.md` is added to the repository in this round.
 documented in Section 1. All statements marked as proved have proofs
 here or an explicit application of a known theorem with its
 hypotheses checked. Conditional directions are identified as such.
+
+## 11. Continuation: unbounded minimal obstructions to adding one chain
+
+The continuation following the user's request to keep working establishes
+a stronger obstruction than failure of AD. Even after restricting to
+points individually eligible for colour 0, pairwise feasibility does not
+imply simultaneous feasibility. In fact there is no bound on the arity
+of the minimal obstructions, already at width three with six prescribed
+points.
+
+### 11.1. Statement
+
+**Theorem 11.1 (unbounded relative obstruction size).** For every m>=2
+there is a finite width-three partial order P_m, three prescribed
+two-element chains E0,E1,E2 satisfying FE_3 and AS, and an m-element
+chain Y, disjoint from the prescription, such that:
+
+1. for every proper subset T of Y there is a prescribed three-chain
+   partition D0,D1,D2 with T contained in D0;
+2. no prescribed three-chain partition has Y contained in D0.
+
+Moreover, E0,E1,E2 are precisely the active blocks of a locked
+(1,2)-saturated template. The chain E0 union Y is a maximal chain
+meeting every maximum antichain, and is the first part of an
+unprescribed optimal chain partition, but its deletion destroys
+finite extension for the other two prescribed chains.
+
+Consequently, for any fixed k, testing all subsets of size at most k
+of a proposed augmentation does not suffice; take m>k. The theorem
+concerns extension relative to the other prescribed chains. It does
+not contradict the unprescribed single-chain pair criterion in
+Corollary 2.2.
+
+### 11.2. The explicit order
+
+The point set consists of m+2 layers, each with three points:
+
+\[
+A=\{a_0,a_1,a_2\},\quad
+L_i=\{p_i,q_i,x_i\}\ (1\le i\le m),\quad
+B=\{b_0,b_1,b_2\}.
+\]
+
+Order the layers as A,L1,...,Lm,B. Declare s<t whenever s lies in an
+earlier layer than t, with exactly the following exceptions:
+
+\[
+a_1\perp p_1,\qquad
+q_i\perp p_{i+1}\ (1\le i<m),\qquad
+q_m\perp b_1.
+\tag{11.1}
+\]
+
+Points in the same layer are incomparable. Equivalently, the
+incomparability graph consists of the layer triangles and the m+1
+edges in (11.1), with no other edges.
+
+This is a partial order. Every exception concerns consecutive
+layers. If s<t<u, the layers of s and u differ by at least two, so
+s<u is included. Thus transitivity holds directly. Antisymmetry
+follows from increasing layer indices. The order is finite and
+therefore Borel.
+
+Set
+
+\[
+E_c=\{a_c,b_c\}\quad(c<3),\qquad
+Y=\{x_1,\ldots,x_m\}.
+\]
+
+Each E_c is a chain, since A and B are nonconsecutive layers. The
+set Y is a chain because no exceptional pair involves any x_i.
+
+### 11.3. Every proper subset has an explicit extension
+
+For any chosen j in {1,...,m}, colour a_c and b_c by c and colour
+the inner layers as follows:
+
+| Layer index | d(p_i) | d(q_i) | d(x_i) |
+| --- | --- | --- | --- |
+| i<j | 2 | 1 | 0 |
+| i=j | 2 | 0 | 1 |
+| i>j | 1 | 2 | 0 |
+
+Each layer receives all three colours. The first exceptional edge
+has colours 1 and 2. Before layer j, a bridge q_i--p_(i+1) has
+colours 1 and 2. The bridge immediately after j, if present, has
+colours 0 and 1. Subsequent bridges have colours 2 and 1. The last
+exceptional edge has colours 0 and 1 when j=m, and 2 and 1 when j<m.
+Thus every exceptional edge is properly coloured, and these are
+all the remaining incomparabilities. The colour classes are chains.
+
+This gives a prescribed partition with every x_i except x_j in
+colour 0. Given T properly contained in Y, choose x_j outside T.
+The same partition witnesses T subset D0. It also proves FE_3
+and the upper bound width(P_m)<=3. Since every layer is a
+three-element antichain, width(P_m)=3. A and B witness AS for all
+six prescribed points.
+
+### 11.4. Why the full chain cannot be assigned colour 0
+
+Suppose a prescribed partition gives every x_i colour 0. Then p_i
+and q_i have colours 1 and 2 in some order. Since a1 has colour 1
+and is incomparable with p1, we must have
+
+\[
+d(p_1)=2,\qquad d(q_1)=1.
+\]
+
+Inductively, q_i of colour 1 and the exceptional edge q_i--p_(i+1)
+force p_(i+1) to have colour 2 and q_(i+1) to have colour 1. Hence
+q_m has colour 1. But b1 also has prescribed colour 1 and is
+incomparable with q_m, a contradiction. This proves Theorem 11.1.
+
+The argument is the forced two-colouring of the odd path
+
+\[
+a_1,p_1,q_1,p_2,q_2,\ldots,p_m,q_m,b_1,
+\]
+
+whose endpoints have the same prescribed colour. Declaring all
+x_i to have colour 0 removes colour 0 from every internal vertex
+of this path. Leaving even one x_j unrestricted permits the
+explicit repair in the table above.
+
+### 11.5. Consequences for proposed compatibility graphs
+
+Let U0 consist of those points that can receive colour 0 in at
+least one prescribed extension. On U0 define Gamma0 by saying that
+two distinct points are adjacent if no prescribed extension gives
+both of them colour 0.
+
+For m>=3, all points of Y belong to U0, and Gamma0 restricted to Y
+has no edges, because every pair is a proper subset of Y. Yet Y
+cannot receive colour 0 simultaneously. Therefore the feasible
+augmentations of E0, while preserving E1 and E2, are not the
+independent sets of Gamma0. They cannot be the independent sets of
+any graph on the same candidate points: every pair in Y is feasible
+but Y is not. The same reasoning with m>k rules out an exact
+description by forbidden subsets of uniformly bounded size k.
+
+This rules out the specific proposal to reuse a pairwise
+forced-inequality graph as a complete description of relative
+coherence. It does not rule out encodings with additional state
+variables, nor methods that retain arbitrary finite constraints.
+
+Even colour-specific pair conflicts need not coincide with the
+ordinary G*: take m=2. Both x1 and x2 individually can have colour 0,
+but they cannot both have colour 0. They can, however, both have
+colour 1 in a prescribed partition: colour every inner layer
+(p_i,q_i,x_i) by (0,2,1), and keep both boundary colourings (0,1,2).
+Thus x1 and x2 are Gamma0-adjacent but are not G*-adjacent.
+
+For m>=3, the stronger obstruction is genuinely of higher arity,
+even after all such colour-specific pair conflicts have been
+included. The restricted-order transitivity question is not used
+as an assumption in any argument here.
+
+### 11.6. The bad chain is already maximal and G*-independent
+
+Let C0=E0 union Y. It is a chain. It is maximal: every point outside
+C0 shares its layer with a point of C0, and those two points are
+incomparable.
+
+There is an unprescribed three-chain partition having exactly C0
+as its colour-0 class. Colour all inner layers by (2,1,0), the lower
+boundary by (0,1,2), and the upper boundary by (0,2,1). The
+exceptional edges all receive different colours. This also shows
+that C0 is G*-independent for the ordinary finite forced-inequality
+graph, and therefore is maximal G*-independent as well.
+
+Every three-element antichain is one of the displayed layers.
+Indeed, points in nonconsecutive layers are comparable, and
+between any two consecutive layers there is only one exceptional
+pair, which cannot belong to a triangle spanning those layers.
+Thus C0 meets every maximum antichain.
+
+Deleting C0 leaves the odd path obstruction above, with its two
+endpoints still in E1, so the remaining prescribed two-chain
+problem has no solution. Requiring the PU output to be maximal,
+even maximal G*-independent, therefore does not fix the problem.
+
+### 11.7. Locked active templates and all n,r
+
+For r=1, set U=A, V=A union B, and S=V. Width three gives
+alpha_1=3 and alpha_2<=6, while A and B attain alpha_2=6.
+The three two-element blocks E_c have template norms 3 and 6 and
+are all active. Fix any one of the prescribed partitions from
+Section 11.3. Restricting it to S union F, for any finite F outside
+S, preserves both norms, because each colour class retains its
+two prescribed endpoints. Hence the template is locked in the
+exact sense of the manuscript.
+
+The construction extends to every n>=3 and r>=1. First prepend
+r-1 additional three-element antichain layers by ordinal sum,
+and prescribe their c-th points to E_c for c<3. Then take the
+disjoint union with n-3 chains H_c, 3<=c<n, each of length r+1;
+make every point of every H_c incomparable with the entire
+three-width construction and with every other H_d. Prescribe
+E_c=H_c for c>=3.
+
+The width is 3+(n-3)=n. The displayed three-chain partition,
+together with the H_c, gives FE_n. Each prescribed base layer,
+augmented by one point from every H_c, witnesses AS for its
+points; choosing any specified point of H_c in such a witness
+also verifies AS on the added chains.
+
+All prescribed blocks now have r+1 points. Let V=S be their union,
+and choose U by taking r of the r+1 prescribed base layers and
+r points of each H_c. These give r and r+1 disjoint n-antichains,
+respectively, so alpha_r=nr and alpha_(r+1)=n(r+1). Every block
+is active, and the fixed prescribed partition proves locking
+over every outside finite set.
+
+On the original gadget, colours c>=3 are unavailable because
+every original point is incomparable with every prescribed point
+of H_c. The argument of Sections 11.3--11.4 therefore still proves
+that every proper subset of Y, and not Y itself, can be added to
+the first prescribed chain. This is an unbounded obstruction
+family inside locked active templates for all n>=3 and r>=1.
+
+### 11.8. Verification and updated research status
+
+The search that led to this construction first found a
+fifteen-point example through exact permutation states on five
+three-element layers. The final construction above is simpler and
+has a proof for every m; its validity does not depend on that
+search. Direct finite checks for m=1,...,8 verified transitivity,
+AS, the displayed prescribed partitions, the nonexistence of an
+all-zero assignment on Y, exact width, the locked norms, the list
+of maximum antichains, and maximality of C0. No claim that 3m+6
+is the smallest possible number of vertices is made.
+
+The main Borel prescription problem remains unresolved at width
+three and for general finite n>=3. These finite orders have
+explicit Borel prescribed extensions; they are counterexamples
+to compatibility and puncturing shortcuts, not to the main
+theorem sought by the project.
+
+What has now been ruled out is stronger than merely deriving AD:
+neither pairwise tests nor any fixed finite-arity replacement can
+recognize all coherent additions to one prescribed chain. A
+remaining positive approach must preserve the entire finite
+prescribed-extension condition, potentially through finite
+colouring states. No new selection lemma is assumed here.
+
+Only this memo is updated in the continuation. The main manuscript
+remains unchanged.
