@@ -9,7 +9,7 @@ At this baseline the repository contained only `main.tex`, with no existing
 memo or research notes. This memo records results established in this round;
 it does not claim that the main prescription problem has been solved.
 
-### Status
+### Status (updated through the 2026-09-08 continuation)
 
 | Question | Conclusion established in this round |
 | --- | --- |
@@ -21,6 +21,10 @@ it does not claim that the main prescription problem has been solved.
 | Do locked active templates imply AD? | No, for every width n >= 3 and every saturation parameter r >= 1 |
 | Are AS transition permutations confined to an order-two subgroup? | No; arbitrary permutations occur, and a connected sequence of overlapping witnesses generates S3 |
 | Are there positive special cases for arbitrary Borel prescriptions? | Yes: realistic finite-width orders, and orders with locally countable incomparability graphs; AS is unnecessary in both cases |
+| Is relative augmentation recognizable by a fixed finite arity? | No, even in locked active templates for every n >= 3 and r >= 1; Section 11 |
+| Is exact feasibility of a finite permutation state Borel? | Not in general: it can be complete coanalytic, already for parameterized width-three locked templates; Section 12 |
+| Can complete states nevertheless be selected Borelly? | Yes along any given Borel sequence of countably many markers, preserving all finite extension constraints; this alone does not colour unmarked points; Section 13 |
+| A further positive class beyond the two earlier special cases? | Yes: uniform substitution over a realistic quotient, with locally countable incomparability inside each fibre; arbitrary finite Borel lists are allowed; Section 14 |
 
 “Positive” in the last row means that FE suffices. The local-countability result
 also allows arbitrary Borel lists from a fixed finite palette.
@@ -794,3 +798,429 @@ colouring states. No new selection lemma is assumed here.
 
 Only this memo is updated in the continuation. The main manuscript
 remains unchanged.
+
+## 12. Continuation: exact finite-state feasibility can be complete coanalytic
+
+Research continuation: 2026-09-08, following repository commit
+5da11b7bbf37e52ab4db3a5060e1779a77442ab0.
+
+The finite-state approach must distinguish the exact set of possible states
+from the existence of a Borel selection among possible states. This section
+gives a sharp obstruction to the first; Section 13 proves a selection result
+that survives it.
+
+### 12.1. General upper bound from compactness
+
+Consider a Borel family of graphs or partial orders indexed by a standard
+Borel parameter space T. Write X_t for the fibre at t. Fix a finite palette
+n and Borel lists L(t,x) contained in n, and assume every finite induced
+list-colouring problem in every fibre is solvable. Prescriptions are the
+special case of singleton lists on the prescribed sets.
+
+Formally, the family has a Borel total space contained in T x Z for a
+standard Borel space Z, and its relations and lists are Borel on that
+space. Constraints in this parameterized assertion do not couple
+different fibres.
+
+Let b_0(t),...,b_(k-1)(t) be Borel marked points in X_t. For a word
+s in n^k, let V_s be the set of parameters t for which some abstract
+list-colouring of the entire X_t has c(b_j(t))=s(j) for j<k.
+Repeated markers must have equal assigned colours.
+
+**Proposition 12.1.** V_s is coanalytic.
+
+**Proof.** By compactness in n^(X_t), failure of this extension condition
+is witnessed by finitely many vertices and constraints. Equivalently,
+some finite F containing the marked points has no list-colouring respecting
+the word s. For a fixed finite tuple, existence or nonexistence of such a
+colouring is a finite Boolean combination of Borel predicates, since the
+palette is finite. Existentially quantifying over the finite tuple makes
+T minus V_s analytic. This includes conflicts between repeated markers.
+QED.
+
+The quantification is over all finite witnesses in X_t, not merely over
+finitely many marked points. In general it cannot be replaced by a Borel
+test, as the next construction shows.
+
+### 12.2. A uniform width-three construction
+
+Let T be the space of trees on N, with its usual standard Borel structure.
+For t in T let Y_t be a tagged copy of the branch set [t], ordered by the
+lexicographic order on N^N. Thus Y_t is a chain, possibly empty. The set of
+pairs (t,z) with z a branch through t is closed.
+
+In addition to Y_t put nine named points in the fibre:
+
+- A_t={a_0,a_1,a_2};
+- B_t={b_0,b_1,b_2};
+- D_t={d_0,d_1,d_2}.
+
+Each of these three sets is an antichain. Declare all comparisons
+A_t < B_t < D_t, where comparisons between whole sets mean every pair
+in the indicated direction. For every y in Y_t also declare
+
+\[
+a_1<y,\qquad y<b_0,\qquad y<b_2,\qquad y<d_i\quad(i<3).
+\]
+
+Apart from the order inside Y_t, these are all strict comparisons.
+In particular y is incomparable with a_0,a_2,b_1.
+Prescribe E_i(t)={a_i,d_i}.
+
+The relation is transitive: the only extra two-step comparisons through
+Y_t are a_1<b_0,b_2,d_i, already included, and those through B_t yield
+the listed comparisons to D_t. It is antisymmetric because all strict
+comparisons respect the displayed levels, with a strict linear order
+inside the Y_t level. It is Borel uniformly in t.
+
+There is a fixed Borel prescribed partition, valid whether or not Y_t
+is empty:
+
+\[
+C_0(t)=\{a_0,b_1,d_0\},\quad
+C_1(t)=\{a_1,b_0,d_1\}\cup Y_t,\quad
+C_2(t)=\{a_2,b_2,d_2\}.
+\]
+
+These are chains. A_t witnesses width at least three, so the exact width
+is three. The partition verifies FE_3 and abstract and Borel extension.
+A_t and D_t verify AS for every prescribed point.
+
+This is also an actual locked active template in each fibre:
+take U=A_t and V=S=A_t union D_t. Each prescribed chain has two points,
+the norms are alpha_1=3 and alpha_2=6, and restriction of the displayed
+partition to S union F keeps both norms for every finite outside F.
+The two disjoint three-antichains A_t,D_t verify the second norm directly.
+
+### 12.3. Exact state computation
+
+A colouring on B_t is a permutation sigma in S3, with sigma(i)=c(b_i).
+Let S(t) be the set of permutations that extend the prescribed colouring.
+Then
+
+\[
+S(t)=
+\begin{cases}
+S_3, & [t]=\varnothing,\\
+\{\sigma\in S_3:\sigma(1)\ne1\}, & [t]\ne\varnothing.
+\end{cases}
+\]
+
+Indeed, every y in Y_t is incomparable with a_0 and a_2, so its colour
+must be 1. Its incomparability with b_1 excludes sigma(1)=1 whenever
+Y_t is nonempty. Conversely, if sigma(1) differs from 1, assign colour
+1 to all of Y_t. The unique colour-1 point in B_t is then b_0 or b_2,
+both above Y_t, and this gives a prescribed chain partition. If Y_t
+is empty, any permutation on B_t works because all A_t-to-B_t and
+B_t-to-D_t comparisons are present.
+
+Consequently
+
+\[
+\{t:\operatorname{id}\in S(t)\}
+=\{t:[t]=\varnothing\}=\mathrm{WF}.
+\]
+
+This is complete coanalytic. The standard completeness fact and its proof
+are in [B. D. Miller, An introduction to classical descriptive set theory,
+Proposition 1.4.28](https://glimmeffros.github.io/seminars/descriptive.pdf):
+ill-founded trees are complete analytic, hence their complement WF is
+complete coanalytic. Proposition 12.1 is therefore sharp.
+
+In particular, choosing the lexicographically least feasible permutation,
+with the identity first, gives a non-Borel map: the inverse image of the
+identity is exactly WF. A Borel choice nevertheless exists here, for
+example the constant permutation (1,0,2) used in the displayed partition.
+
+To view the construction as one Borel poset with Borel prescribed chains,
+fix a Borel linear order on T and take the ordinal sum of the fibres:
+every point in an earlier fibre is below every point in a later fibre.
+The global width is three, each union E_i=union_t E_i(t) is a Borel
+chain, and the displayed partition is globally Borel. State feasibility
+at B_t is unchanged since choices in different fibres are independent.
+Thus the example satisfies the main problem's hypotheses, but it is
+not a counterexample to its conclusion.
+
+### 12.4. All widths and all locked parameters
+
+For n>=3 and r>=1, in each fibre prepend r-1 three-antichain layers
+to the base order and add their i-th points to E_i for i<3. Disjointly
+add n-3 chains H_i of length r+1, each incomparable with the whole base
+and with every other H_j, and prescribe E_i=H_i for i>=3.
+
+The width is n, witnessed by any displayed three-antichain together
+with one point from each H_i. The displayed partition extends, so FE_n
+holds. The r+1 prescribed three-antichain layers, augmented by arbitrary
+points of the H_i, verify AS for all prescribed points.
+
+All E_i have r+1 points. Their union V=S and the subset U consisting
+of r prescribed base layers and r points from each H_i give norms
+alpha_r=nr and alpha_(r+1)=n(r+1). Every block is active and restriction
+of the explicit colouring verifies locking for every finite outside set.
+The additional colours are unavailable on the base because of its
+incomparability with the prescribed H_i. Therefore the same exact S3
+state computation remains valid.
+
+The locking assertion here is fibrewise, for finite prescribed blocks.
+After forming the global ordinal sum, the E_i are infinite; no finite
+global template containing these entire unions is asserted.
+
+Direct finite checks replaced Y_t by chains of lengths 0,...,5 and
+exhaustively computed all boundary permutations, obtaining exactly six
+states when empty and four when nonempty. Transitivity, exact width,
+AS, the explicit colouring, and locked norms were also checked.
+The lifted cases n=5,r=3 with zero and two witnesses passed the same
+checks. These finite computations support the order calculation;
+the descriptive complexity claim follows from the proof above.
+
+## 13. Proved: Borel coherent selection along countably many marked points
+
+The non-Borel viability relation in Section 12 does not prevent choosing
+a viable state. The needed distinction can be proved using analytic
+separation; it does not require a new unproved uniformization hypothesis.
+
+### 13.1. Finite coanalytic covers have Borel refinements
+
+**Lemma 13.1.** If V_0,...,V_(q-1) are coanalytic subsets of a standard
+Borel space T and their union is T, there is a Borel function h:T->q
+such that t belongs to V_(h(t)).
+
+**Proof.** Put A_i=T minus V_i. These are analytic and have empty
+intersection. They have Borel supersets B_i with empty intersection.
+For completeness, this finite version follows by induction from
+Lusin separation. Separate intersection_(i<q-1) A_i from A_(q-1)
+by a Borel set C. On T minus C apply the induction hypothesis to
+the first q-1 analytic sets. If their resulting hulls there are B'_i,
+use B_i=C union B'_i for i<q-1 and B_(q-1)=T minus C. The base
+q=1 has A_0 empty. Now let h(t) be the least i with t outside B_i.
+It is Borel and t is outside A_i, as required. QED.
+
+The separation inputs are classical; see Theorems 1.4.14 and 1.4.21
+of [Miller's notes](https://glimmeffros.github.io/seminars/descriptive.pdf).
+This proof selects from a Borel refinement. It does not claim that
+the lexicographically least genuinely viable state is Borel.
+
+### 13.2. Countably many markers, with full finite extension preserved
+
+Retain the parameterized setup of Section 12.1, and suppose now that
+we are given Borel markers b_j(t) in X_t for every j in N.
+
+**Theorem 13.2.** There is a Borel map s:T->n^N such that, for every t,
+some abstract list-colouring c_t of the entire X_t satisfies
+c_t(b_j(t))=s(t)(j) for every j. No Borel dependence of the unmarked
+part of c_t is claimed.
+
+**Proof.** A finite marker word is called viable if it extends to an
+abstract colouring of the entire fibre. Its viability set is coanalytic
+by Proposition 12.1. Start with the empty viable word.
+
+Suppose Borel s_k:T->n^k has been chosen and is viable at every t.
+For each i<n, the set of t for which s_k(t) followed by i is viable
+is coanalytic: partition T into the finitely many Borel sets where
+s_k has a specified value and use Proposition 12.1 on each.
+These n sets cover T. An abstract colouring witnessing viability
+of s_k supplies at least one allowable next colour.
+
+Apply Lemma 13.1 to choose a Borel next digit, and obtain s_(k+1).
+Iterating gives the Borel sequence s(t).
+
+For fixed t, the space K_t of all abstract list-colourings of X_t is
+a nonempty closed subset of the compact product n^(X_t). The sets
+of colourings in K_t agreeing with s(t) on the first k markers are
+nonempty nested closed sets. Compactness gives a colouring in their
+intersection. It agrees on every marker, including repeated markers.
+QED.
+
+This argument preserves the entire finite extension condition at every
+step. It does not project feasibility to individual colours independently
+or impose any fixed arity bound. Finite blocks of marked points, including
+antichains carrying permutation states, can be treated as successive
+groups of coordinates.
+
+### 13.3. A positive extension criterion from a determining sequence
+
+**Corollary 13.3.** In the setup of Theorem 13.2, assume that any two
+abstract prescribed list-colourings of each X_t agreeing on all b_j(t)
+agree everywhere in X_t. Then there is a Borel prescribed list-colouring
+of the entire Borel family.
+
+**Proof.** The theorem chooses marker values admitting an extension;
+the extra hypothesis makes this extension unique in each fibre.
+For i<n let Bad_i be the set of (t,x) for which these marker values,
+the original lists, and the extra demand c(x)=i have no extension.
+
+Bad_i is analytic. Compactness witnesses membership by finitely many
+vertices and finitely many of the assigned markers. Their indices range
+over a countable set, and their chosen colours depend Borelly on t,
+so the finite obstruction condition is again a projection of a Borel
+relation.
+
+By existence and uniqueness, the colour-i class is
+intersection_(j!=i) Bad_j. It is analytic. The n such classes are
+disjoint and cover the family, so the complement of each is also
+analytic; therefore each class is Borel. For n=1 the colouring is
+constant. QED.
+
+This is a proved sufficient criterion, not a claim that a determining
+sequence exists for every finite-width Borel order. In fact, for n>=2,
+even an ordinal sum over an uncountable index set of n-antichains has no
+countable determining subset for all its unprescribed colourings:
+one can change the permutation on an untouched layer. Such an order
+still has easy Borel colourings.
+
+The marker hypothesis is also not automatic from compactness. A compact
+space of abstract colourings on an uncountable vertex set need not be
+metrizable or determined by countably many vertex evaluations. The
+theorem does not provide a Borel enumeration of uncountable fibres
+or of nonsmooth countable equivalence classes.
+
+### 13.4. A finite permutation criterion without a smooth quotient
+
+The same separation argument yields a directly usable special case.
+
+**Proposition 13.4.** Let G be a Borel graph with a fixed Borel
+n-colouring c. Suppose every proper n-colouring on each connected
+component is a permutation of c on that component. Then every Borel
+precolouring satisfying FE_n extends to a Borel n-colouring.
+
+**Proof.** Let E be connectedness; it is an analytic equivalence
+relation, with no Borelness or smoothness assumption. For each
+permutation pi in S_n, let A_pi be the set of x whose component
+contains a prescribed point e whose required colour differs from
+pi(c(e)). Each A_pi is analytic and E-invariant.
+
+Compactness gives an abstract prescribed colouring. Its restriction
+to any component is pi composed with c for some pi, by hypothesis.
+Thus the intersection of all A_pi is empty.
+
+Disjoint analytic E-invariant sets can be separated by an E-invariant
+Borel set. To see this, start with a Borel separator D_0. Its
+E-saturation is analytic and still avoids the second invariant set.
+Enclose that saturation in another Borel separator D_1 and repeat.
+The union of the D_k is Borel, invariant, and separates the sets.
+Apply the induction in Lemma 13.1 using such invariant separators.
+It gives invariant Borel hulls B_pi of A_pi with empty intersection.
+
+Choose the least pi with x outside B_pi. This choice is Borel and
+constant on each component. The colouring x -> pi_x(c(x)) is proper
+and has every required colour. QED.
+
+For orders, Borel Dilworth supplies c whenever the palette is the
+finite width. This proposition extends the component-permutation
+argument beyond two colours when its explicit rigidity hypothesis
+holds. The unrestricted width-three problem does not have that
+hypothesis: the finite examples in Sections 4 and 11 already allow
+different permutations in the same connected component.
+
+## 14. Proved: extension over a realistic quotient with countable local incomparability
+
+The earlier realistic and locally countable cases can be combined
+in a way that handles orders satisfying neither global hypothesis.
+
+**Theorem 14.1.** Let P be a finite-width Borel partial order on X.
+Suppose there are a Borel surjection q:X->T, a Borel subset T of R,
+and a realistic finite-width Borel partial order Q on T such that:
+
+1. For points in different fibres, comparisons are determined entirely
+   by Q:
+   x<_P y if and only if q(x)<_Q q(y), whenever q(x)!=q(y).
+2. Inside each fibre q^(-1)({t}), every point has only countably
+   many incomparable neighbours.
+
+For any Borel lists L(x) contained in a fixed finite palette n,
+finite solvability implies a Borel list-colouring of
+incomparability(P). In particular FE_n suffices for prescribed
+Borel chains, with no AS assumption.
+
+**Proof.** Take an abstract list-colouring d by compactness, and let
+D_i be its colour-i chain. Its image T_i=q(D_i) is a Q-chain:
+any two distinct image points have comparable representatives in D_i,
+so condition 1 makes the image points Q-comparable.
+
+Extend T_i to a maximal Q-chain M_i. All M_i are Borel by maximal-chain
+regularity for realistic finite-width orders, as in Section 7.
+The sets T_i and D_i need not be definable; no projection regularity
+for them is assumed. Define the Borel restricted lists
+
+\[
+L'(x)=L(x)\cap\{i<n:q(x)\in M_i\}.
+\]
+
+They contain d(x), so all their finite constraints remain solvable.
+
+Now replace comparisons between distinct fibres by the ordinary real
+order of their parameters. In other words, define a Borel partial
+order P' by keeping P inside each fibre and declaring every point
+of fibre t below every point of fibre u whenever t<u in R.
+This is an ordinal sum of the fibre orders. It is transitive and
+antisymmetric; its incomparability graph is locally countable by
+condition 2. Each fibre has finite width bounded by that of P.
+
+The map d is an abstract L'-colouring of incomparability(P'), since
+only extra comparabilities were added. Apply Proposition 8.1 to P'
+and L'. It supplies a Borel proper list-colouring c.
+
+Finally, two distinct points with c(x)=c(y)=i are P-comparable.
+If they lie in the same fibre, this follows from the definition of
+P'. If they lie in different fibres, their parameters both belong
+to the Q-chain M_i, so condition 1 again gives P-comparability.
+Also c respects L' and hence L. QED.
+
+No uniform choice of maximal chains across parameters is required:
+only the finitely many chains M_i of the single quotient Q are
+chosen. Uniform colouring inside fibres is supplied by applying
+the already proved locally countable theorem once to the whole P'.
+
+**Corollary 14.2.** In particular the theorem applies when each fibre
+is an arbitrary Borel chain. Fibres need not be countable and their
+linear orders need not embed in the reals.
+
+This positive class is not contained in either earlier global
+special case. For example, take three mutually incomparable chains,
+each of order type R x {0,1} in lexicographic order. Collapse the
+two-point fibres onto a quotient consisting of three incomparable
+copies of R, encoded in three disjoint real intervals. This quotient
+is realistic and the fibre incomparability graphs are empty.
+
+The full order has width three and uncountable incomparability
+neighbourhoods. It is not realistic: in any one of its chains, an
+order-preserving injection into R would assign disjoint nonempty
+real intervals to the uncountably many pairs (t,0)<(t,1), requiring
+uncountably many distinct rationals. Theorem 14.1 nevertheless
+gives prescribed and list extensions.
+
+The quotient condition is essential to this proof. Without uniform
+comparisons between distinct fibres, membership of q(x),q(y) in a
+quotient chain would not imply that x,y are P-comparable. No claim
+that every finite-width Borel order admits such a quotient is made.
+
+## 15. Status after the 2026-09-08 continuation
+
+The main FE + AS implication remains unresolved at width three
+and for all finite widths n>=3.
+
+What is proved in this continuation is:
+
+- Exact feasibility of a complete finite boundary permutation can be
+  complete coanalytic, even in a Borel family of finite prescribed
+  locked active templates, for all n>=3 and r>=1.
+- Finite coanalytic viability sets still admit Borel refinements.
+  Countably many given Borel markers can therefore be assigned
+  colours Borelly while retaining the entire finite extension
+  condition. A determining sequence gives a full Borel extension.
+- Componentwise permutation rigidity gives another positive
+  prescribed-extension criterion, without requiring smooth
+  connectedness.
+- Uniform substitution over a realistic quotient, with locally
+  countable fibre incomparability, gives a further full positive
+  theorem for arbitrary finite Borel lists, without AS.
+
+The viable-state route is therefore not defeated by non-Borel
+state membership itself. Its remaining task is to organize enough
+states, or enough uniformly manageable residual pieces, to colour
+the whole uncountable order while maintaining compatibility.
+Countable marker selection by itself does not do this; the
+component-rigidity and quotient hypotheses have not been derived
+from FE + AS.
+
+Only this memo is updated. The main manuscript is unchanged.
