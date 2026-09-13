@@ -1224,3 +1224,309 @@ component-rigidity and quotient hypotheses have not been derived
 from FE + AS.
 
 Only this memo is updated. The main manuscript is unchanged.
+
+
+## 16. Reading the simplified proof: anchored overflow, forced closure, and the bulk-addition obstruction
+
+Research continuation: 2026-09-13. Source supplied by the user:
+Jialiang He, "Proof of Borel Dilworth Theorem", six-page PDF
+(simplifyboreldilworth .pdf). The entire text was read and the final
+induction page was also checked visually. This section follows its
+specific proof mechanism rather than substituting an unrelated method.
+
+The requested full multi-anchor extension theorem is not proved here.
+Two parts of the mechanism do extend, with proofs below. The direct
+bulk-addition step has a verified finite counterexample.
+
+### 16.1. The precise scope of the original Q construction
+
+The PDF's Q is the unprescribed refinement
+x <=_Q y iff x <=_P y and every finite problem admits an optimal
+partition putting x,y together. Its incomparability graph is G*.
+
+Propositions 0.2 and 0.3 supply a width-k partial order and the safe-point
+property for maximum Q-antichains. For one finitely coherent Borel seed
+B, the same puncturing argument can begin at B rather than at the empty
+set. Its result is exactly the single-seed extension theorem already
+recorded in Section 2; this is not a new claim of progress.
+
+To finish that argument without a regularity issue, puncture the maximum
+Q-antichains and then apply the width induction to the Borel induced
+P-order on the complement. Its width is at most k-1. The resulting full
+optimal P-partition automatically consists of Q-chains, since restriction
+of this partition witnesses pair compatibility on every finite set.
+
+This also repairs two details in the PDF's Proposition 0.6 as written:
+the punctured family should be the maximum Q-antichains if the subsequent
+width bound is asserted for Q; and Q is not known to be Borel merely
+from its definition, so a Borel-order induction should be applied to the
+residual P-order. Alternatively one can explicitly use the wider
+definability class of the Carroy--Miller--Vidnyanszky theorem.
+Neither issue affects the finite arguments in Propositions 0.2--0.3.
+
+For several prescribed colours, the correct analogue of safety must
+preserve all labels and all finite extension constraints. Being merely
+a Q-chain does not express that condition.
+
+There is also a useful valid consequence of AS. If the one-seed
+construction starts at E_0, its output C_0 cannot meet any E_i for
+i!=0: an AS witness for e in E_i contains a point of E_0 incomparable
+with e. Thus AS guarantees avoidance of the other prescribed sets.
+It does not guarantee FE for their residual prescription. Section
+16.4 exhibits a legitimate puncturing Q-chain with precisely that
+residual failure.
+
+### 16.2. Elementary Borel hull lemma for all finite constraints
+
+**Lemma 16.1.** Let Z be a standard Borel space and let R_m be an analytic
+subset of Z^m for every m>=1. If A is analytic and
+R_m intersect A^m is empty for every m, then A has a Borel superset B
+with R_m intersect B^m empty for every m.
+
+**Proof.** Fix m. Starting with R_m disjoint from A^m, enlarge the
+coordinates one at a time. Suppose B_1,...,B_(j-1) have already been
+chosen Borel, contain A, and
+
+R_m intersect (B_1 x ... x B_(j-1) x A x ... x A) is empty.
+
+The projection onto coordinate j of
+R_m intersect (B_1 x ... x B_(j-1) x Z x A x ... x A)
+is analytic and disjoint from A. By analytic separation choose a Borel
+B_j containing A and disjoint from that projection. After all m steps,
+R_m avoids the product of the B_j. Hence it avoids B(m)^m where
+B(m)=intersection_(1<=j<=m) B_j. Finally set B=intersection_m B(m).
+QED.
+
+Apply this with Z=X x n. A point (x,i) represents the requirement that
+x receive colour i. For a Borel graph G and a Borel initial prescription
+p, let R_m consist of the m-tuples of such requirements which cannot
+be extended to any abstract proper n-colouring extending p.
+These relations are analytic: compactness reduces failure to a finite
+vertex witness, and the finite colouring tests are Borel.
+
+**Corollary 16.2 (simultaneous anchored Borel hull).** Suppose analytic
+sets A_i, i<n, contain the initial prescribed colour classes, and
+every finite problem admits a proper n-colouring respecting all A_i.
+There are Borel supersets B_i of A_i with the same finite-extension
+property. In particular the B_i are pairwise disjoint independent sets.
+
+**Proof.** The tagged union A=union_i (A_i x {i}) avoids every R_m.
+Apply Lemma 16.1 and take the colour sections of the resulting Borel
+set. A repeated vertex assigned distinct colours is a forbidden
+two-tuple, and an edge assigned the same colour is also forbidden.
+Thus the sections are disjoint independent sets. Avoidance of all
+R_m says that all their finite assignments extend relative to p;
+compactness then gives simultaneous finite coherence, indeed an
+abstract full extension. QED.
+
+For incomparability graphs the B_i are chains. This proves the exact
+multi-anchor version of the PDF's overflow step, including preservation
+of FE. It does not assume any bounded arity for the forbidden relations.
+
+### 16.3. A Borel extension closed under all forced colours
+
+For a coherent Borel partial colouring p, let K(p) be the nonempty
+compact space of all abstract proper n-colourings extending p.
+Say x is forced to colour i over p if every c in K(p) has c(x)=i.
+
+**Theorem 16.3.** Any coherent Borel partial n-colouring p of a Borel
+graph has a coherent Borel partial extension p_infty such that every
+point outside its domain has at least two possible colours among
+the abstract full extensions of p_infty.
+
+**Proof.** For each i, the set Bad_i(p) of x for which p together with
+x=i has no extension is analytic, by the finite-obstruction argument.
+The set of points forced to colour i is
+
+F_i(p)=intersection_(j!=i) Bad_j(p).
+
+It is analytic. For n=1 it is all X. All the assignments x=i for
+x in F_i(p) hold simultaneously in every member of K(p). Therefore
+adjoining all of them to p preserves finite coherence. By Corollary
+16.2, this analytic partial extension has a coherent Borel extension.
+
+Starting from p_0=p, repeat this operation to obtain increasing coherent
+Borel partial colourings p_m, with every point forced over p_m assigned
+in p_(m+1). Their union p_infty is Borel and coherent: every finite
+set of assigned requirements already appears at one stage.
+
+Suppose x outside its domain had just one possible colour i. For every
+j!=i, failure of p_infty together with x=j has a finite witness. Only
+finitely many assigned points of p_infty occur in the finitely many
+witnesses, so all those requirements already belong to some p_m.
+Thus every j!=i is already impossible over p_m, whereas K(p_m) is
+nonempty. The point x is forced to colour i over p_m and is assigned
+at stage m+1, a contradiction. QED.
+
+This is a genuine anchored expansion theorem for partial colourings,
+but it does not assert that the expanded domain is all X.
+
+**Corollary 16.4.** If G already has a Borel proper 2-colouring, every
+coherent Borel precolouring extends to a Borel proper 2-colouring.
+
+**Proof.** Apply Theorem 16.3 with n=2. No edge joins the coloured
+domain to its complement: such an edge would exclude the coloured
+endpoint's colour and force the other colour at its uncoloured endpoint.
+Use the original Borel 2-colouring on the complement and glue it to
+p_infty. There are no cross edges, so the result is proper. QED.
+
+For width-two Borel orders, unprescribed Borel Dilworth supplies the
+initial Borel 2-colouring. This is another complete proof of the
+width-two anchored theorem along an overflow-and-iteration route.
+
+At width three, the identical conclusion is weaker: an uncoloured
+point can still have two possible colours and have neighbours in the
+coloured domain. Gluing an arbitrary residual Borel 3-colouring is
+therefore not justified.
+
+### 16.4. Why the PDF's bulk-addition line does not preserve all anchors
+
+The PDF repeatedly uses the implication
+
+each point of H is safe over C, and H lies in one Q-chain
+=> C union H is a Q-chain.
+
+For the original binary chain property this is correct. The analogous
+implication for simultaneous anchored finite coherence is false.
+
+Use the m=2 instance from Section 11. Its twelve points are four
+three-antichain layers, in increasing order:
+
+A={a_0,a_1,a_2}, L_1={p_1,q_1,x_1},
+L_2={p_2,q_2,x_2}, B={b_0,b_1,b_2}.
+
+Every earlier-layer point is below every later-layer point except
+
+a_1 incomparable with p_1,
+q_1 incomparable with p_2,
+q_2 incomparable with b_1.
+
+Prescribe E_i={a_i,b_i}. This is a transitive width-three order,
+satisfies FE and AS, and is a locked active template with all three
+blocks of size two, as proved in Section 11.
+
+Both x_1 and x_2 can individually be added to colour 0 while keeping
+every E_i. Explicit prescribed colourings of the two inner layers are:
+
+| Additional requirement | (p_1,q_1,x_1) | (p_2,q_2,x_2) |
+| --- | --- | --- |
+| x_1 has colour 0 | (2,1,0) | (2,0,1) |
+| x_2 has colour 0 | (2,0,1) | (1,2,0) |
+
+In both rows a_i and b_i have colour i. Thus each candidate is safe
+over the full original prescription, in the correct anchored sense.
+
+Moreover E_0 union {x_1,x_2} is itself a Q-chain for the PDF's original
+unprescribed Q. To verify this without computing Q, colour A by
+(0,1,2), both inner layers by (2,1,0), and B by (0,2,1).
+This is a proper optimal colouring with E_0,x_1,x_2 all in colour 0.
+Its finite restrictions witness every required Q-comparability.
+
+However x_1 and x_2 cannot both be assigned colour 0 while retaining
+E_1 and E_2. If they were, a_1=1 would force p_1=2 and q_1=1;
+then q_1 incomparable with p_2 forces p_2=2 and q_2=1;
+finally q_2 incomparable with b_1=1 is a contradiction.
+
+Consequently the bulk union may cease to have FE before any Borel
+hull is taken. Corollary 16.2 cannot repair an incoherent input.
+
+In fact the example already satisfies the all-safe condition sought
+by the first phase of the PDF's iteration. Here is a finite certificate
+that Q=P. In the following five unprescribed colourings each row lists
+the colours in A,L_1,L_2,B, in their displayed point order:
+
+| A | L_1 | L_2 | B |
+| --- | --- | --- | --- |
+| 012 | 012 | 012 | 021 |
+| 012 | 021 | 120 | 210 |
+| 012 | 201 | 210 | 102 |
+| 012 | 210 | 201 | 120 |
+| 012 | 012 | 201 | 012 |
+
+Every row is proper, and every comparable pair of distinct vertices
+has equal colours in at least one row. Thus every P-comparison is a
+Q-comparison, proving Q=P. All three-antichains are the four layers:
+an interlayer incomparability is one of the three isolated bridge
+edges and cannot be part of a triangle crossing layers. Hence the
+maximum Q-antichains missed by E_0 are exactly L_1 and L_2.
+
+The two prescribed colourings displayed earlier make x_1,q_2 and
+q_1,x_2, respectively, safe for colour 0. The additional prescribed
+colouring L_1=012,L_2=021 makes p_1,p_2 safe for colour 0.
+Therefore every point of every unhit maximum Q-antichain is individually
+safe over the full prescription.
+
+Choose the background Q-colouring with A=012,L_1=L_2=210,B=021.
+Its colour-0 class is E_0 union {x_1,x_2}. The second-phase bulk
+addition, applied to this class, adds both candidates and destroys FE.
+Thus the failed inference occurs even after the advertised all-safe
+condition has already been achieved.
+
+Moreover C_0=E_0 union {x_1,x_2} meets every maximum Q-antichain,
+because it meets all four layers. It is a valid output of the
+unprescribed one-seed puncturing theorem, contains E_0, and avoids
+E_1 union E_2. Its complement has width two, but its prescribed
+E_1,E_2 extension fails on the odd path
+a_1,p_1,q_1,p_2,q_2,b_1 with equally pinned endpoints.
+Thus every part of the proposed first-chain step can succeed while
+the labelled induction on the complement still fails.
+
+An exhaustive check found 10 prescribed colourings and 384 unprescribed
+proper 3-colourings, and verified the two tables and all comparable-pair
+certificates. The explicit certificates above also give a finite proof
+independent of relying on an unexplained search result.
+
+The Section 11 family gives the same failure at every prescribed
+arity threshold, so increasing a fixed bound on simultaneous checks
+does not resolve this step.
+
+### 16.5. A labelled version of splicing that is valid
+
+There is a useful way to preserve labels when splicing: splice at a
+whole maximum antichain, instead of at a single point.
+
+**Lemma 16.5 (maximum-antichain amalgamation).** Let P have width n
+and A={a_i:i<n} be an n-antichain. Define
+
+L={x: x<=a_i for some i}, U={x: a_i<=x for some i}.
+
+Then L union U=X and L intersect U=A. If proper n-colourings of L
+and U agree on A, their union is a proper n-colouring of X.
+It preserves all prescriptions respected by the two colourings.
+
+**Proof.** A is a maximal antichain, so every point is comparable
+with some a_i, giving the union assertion. If a_i<=x<=a_j,
+the antichain property and antisymmetry force i=j and x=a_i,
+giving the intersection assertion.
+
+Relabel the common colouring of A as a_i=i. If x in L has colour i,
+it is comparable with a_i. The possibility a_i<x is excluded by
+x<=a_j for some j, which would give a_i<a_j. Hence x<=a_i.
+Dually any colour-i point y in U satisfies a_i<=y. Thus all
+cross pairs of colour i satisfy x<=a_i<=y. The glued colour
+classes are chains and all prescribed labels remain intact. QED.
+
+If P is Borel and A is finite, L and U are Borel. Therefore the
+lemma also glues Borel colourings whenever they have already been
+constructed on the two sides with matching boundary states.
+
+This is an actual label-preserving consequence of the splicing idea.
+It does not produce the two required Borel side colourings from their
+abstract existence, so it is not presented as a solution of the
+multi-anchor theorem.
+
+### 16.6. Exact conclusion of the requested adaptation
+
+The supplied proof rigorously supports the one-seed theorem, a full
+simultaneous anchored Borel hull lemma, a Borel forced-colour closure,
+and maximum-antichain amalgamation. The forced-colour closure completes
+the anchored theorem at width two.
+
+For width three and general n>=3, the bulk-addition step that would
+continue the same iteration is false even in finite locked active
+templates. The main FE + AS extension theorem remains unresolved.
+No conclusion that the supplied proof is useless is drawn; the valid
+parts and the precise failed inference are separated above so that
+further adaptations do not silently discard the remaining anchors.
+
+The main manuscript and the user's PDF are unchanged.
