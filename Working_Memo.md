@@ -1530,3 +1530,186 @@ parts and the precise failed inference are separated above so that
 further adaptations do not silently discard the remaining anchors.
 
 The main manuscript and the user's PDF are unchanged.
+
+
+## 17. Countable-fibre monotone maps: a complete anchored extension theorem
+
+Continuation after Section 16, 2026-09-13. The general multi-anchor
+problem is still not claimed solved. This section proves an extension
+theorem without the uniform cross-fibre comparisons required in Section
+14, and checks another possible repair of the relative Q relation.
+
+### 17.1. A chain hull whose incomparabilities stay in fibres
+
+**Lemma 17.1.** Let P be a Borel partial order on a standard Borel space
+X and let r:X->R be Borel, countable-to-one, and nondecreasing:
+x<=_P y implies r(x)<=r(y). If M is any maximal P-chain, there exists
+a Borel set H containing M such that any two P-incomparable points
+of H have equal r-values.
+
+No definability assumption is imposed on M.
+
+**Proof.** Put T=r(M). Choose a countable subset D of T which is dense
+in the subspace topology and contains every point of T isolated from
+the left or from the right. A point t is isolated from the left if
+(t-epsilon,t) misses T for some epsilon>0; define right isolation
+dually. Both sets of one-sided isolated points are countable: their
+respective empty intervals are pairwise disjoint and can be assigned
+distinct rationals.
+
+Let S=M intersect r^(-1)(D). This is countable, because r has countable
+fibres. Define the Borel set
+
+H={x: x is P-comparable with every s in S}.
+
+It contains M. We first show that every x in H is comparable with
+every y in M whose r-value differs from r(x).
+
+Suppose r(x)<r(y). If T meets (r(x),r(y)), density supplies d in D
+in this interval and s in M with r(s)=d. Since x is comparable with
+s and r(x)<r(s), monotonicity forces x<_P s. Since s,y belong to M
+and r(s)<r(y), similarly s<_P y. Hence x<_P y.
+If T misses that interval, r(y) is left-isolated in T, hence belongs
+to D, so y is itself in S and the conclusion follows directly.
+The case r(y)<r(x) is symmetric.
+
+It follows that r(H) is contained in T. Otherwise a point x in H with
+r(x) outside T would be comparable with every point of M, and
+maximality would put x in M, a contradiction.
+
+Now take x,y in H with r(x)<r(y). If D meets (r(x),r(y)), a point
+of S at an intermediate value gives x<_P s<_P y as above. Otherwise
+T misses the open interval, so r(x) is right-isolated and r(y) is
+left-isolated in T. Both values belong to D. Every point of M in
+either endpoint fibre therefore belongs to S.
+
+The point x is comparable with M in its own fibre because those
+points lie in S, and with M outside its fibre by the preceding
+argument. Maximality gives x in M. Likewise y in M. Thus x<_P y.
+This proves the assertion. QED.
+
+In particular incomparability(P) restricted to H is locally countable.
+The important conclusion is stronger than local countability: all
+remaining incomparable pairs lie inside the same specified r-fibre.
+
+### 17.2. Full preservation of arbitrary finite lists
+
+**Theorem 17.2.** Suppose P and r satisfy Lemma 17.1. Let n>=1 and
+let L(x) be Borel lists contained in n. If every finite induced
+list-colouring problem for incomparability(P) is solvable, then
+there is a Borel proper L-colouring of that graph.
+
+Consequently every Borel n-chain prescription satisfying FE_n extends
+to a Borel n-chain partition. AS is unnecessary.
+
+**Proof.** Compactness gives an abstract L-colouring d. Its colour
+classes D_i are chains. Extend each D_i to a maximal chain M_i and
+apply Lemma 17.1 to obtain a Borel hull H_i containing M_i.
+
+Set
+L'(x)=L(x) intersect {i<n:x belongs to H_i}.
+These are Borel lists and d(x) belongs to L'(x). Thus the restricted
+lists still admit the same abstract full colouring.
+
+The image r(X) is Borel, and Lusin--Novikov gives Borel enumerations
+b_0(t),b_1(t),... of every fibre r^(-1)({t}); repetitions can pad finite
+fibres. For each t choose colours of this sequence subject to:
+
+- equal values at repeated vertices;
+- different values at P-incomparable vertices;
+- membership in the lists L'(b_j(t)).
+
+The satisfying sequences form a nonempty compact subset of n^N.
+A finite word u is extendable if and only if, for every k>=length(u),
+there is an assignment on the first k coordinates satisfying the
+corresponding finite constraints and extending u. This is Borel in t:
+there are only finitely many colour assignments for each k.
+Recursively choose the least extendable next digit. This gives a
+Borel colouring c inside every fibre, uniformly in t.
+
+It remains to check pairs in different fibres. If c(x)=c(y)=i,
+then x,y both lie in H_i. Lemma 17.1 makes them P-comparable
+whenever r(x)!=r(y). In the same fibre comparability follows from
+the local colouring. Hence every colour class is a P-chain.
+The colouring respects L' and therefore L. QED.
+
+The proof never permutes away the prescribed labels and never combines
+individually safe assignments without checking their joint constraints.
+The fibrewise compact construction makes all colour choices jointly.
+
+This differs from Section 14: r need not be injective or strictly
+increasing on strict P-comparisons, and there is no requirement that
+two fibres have uniform comparisons. The chain hull lemma is what
+makes the final cross-fibre verification possible.
+
+### 17.3. The hypothesis is not automatic
+
+The theorem does not cover all finite-width Borel orders. Even the
+Borel linear order R x R in lexicographic order has no countable-to-one
+nondecreasing map into R.
+
+Indeed, on each vertical copy {t} x R such a map must be nonconstant,
+since a constant value would have an uncountable inverse image.
+Choose two points of that copy with distinct image values. The open
+real intervals between these image values are nonempty and pairwise
+disjoint for distinct t, by monotonicity in lexicographic order.
+This would give uncountably many distinct rationals, a contradiction.
+
+This example is itself a chain and poses no colouring obstruction.
+It shows why existence of r cannot be silently inferred from finite
+width. Extending the proof to uncountable fibres requires another
+argument; the enumeration in Theorem 17.2 explicitly uses countability.
+
+### 17.4. Restricting relative Q to individually eligible points still fails
+
+One possible repair of the anchored Q relation is to work only on
+points which can actually receive the target colour. This also fails
+to restore transitivity, as the following thirteen-point construction
+shows.
+
+Start with the twelve-point order of Section 16.4 and add z, with
+
+p_1<z, x_1<z, z<p_2, z<x_2,
+
+taking the transitive closure and adding no other generating comparisons.
+The resulting order restricts to the original order on the old points:
+all paths through z create only previously present comparisons from
+{p_1,x_1} to {p_2,x_2}, or comparisons involving the outer layers.
+In particular none of the three exceptional incomparabilities is lost.
+The point z is incomparable with q_1 and q_2.
+
+Keep E_i={a_i,b_i}. The following are prescribed chain partitions,
+with z assigned colour 0 and the outer layers both coloured 012:
+
+| Requirement | L_1 colours | L_2 colours |
+| --- | --- | --- |
+| x_1=z=0 | 210 | 021 |
+| z=x_2=0 | 021 | 120 |
+
+They verify finite extension and width at most three; A witnesses
+width exactly three, and A,B still verify AS.
+
+Let U_0 be the set of points that can individually receive colour 0
+in a prescribed extension. On U_0 define x<=_0 y to mean x<=_P y
+and that some prescribed extension gives both x,y colour 0.
+Then x_1,z,x_2 all belong to U_0, and the displayed colourings give
+
+x_1<=_0 z<=_0 x_2.
+
+But x_1 and x_2 cannot both receive colour 0, because the original
+odd-path obstruction remains induced. Thus x_1 is not <=_0 x_2.
+The relation is nontransitive even after restriction to eligible points.
+
+There is no descriptive issue in this counterexample. Exhaustive
+enumeration found 14 prescribed colourings and verified the width,
+AS, and the displayed assignments. No minimality claim for thirteen
+vertices is made.
+
+### 17.5. Remaining status
+
+Theorem 17.2 is a complete extension theorem under its stated hypothesis.
+The unrestricted FE_n + AS theorem, for n>=3, has not been proved.
+The relative binary-order repair in Section 17.4 is refuted, rather
+than left as a conjectural substitute for the main problem.
+
+The main manuscript is unchanged.
