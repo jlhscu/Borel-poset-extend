@@ -1,5 +1,17 @@
 # Working Memo: Borel chain prescriptions
 
+## Current status (2026-09-29)
+
+The former open finite-width chain prescription problem is resolved by
+Theorem C and the stronger Borel finite-list theorem in main.tex.
+For a Borel partial order, every finitely feasible finite-palette Borel
+list assignment on its incomparability graph has a Borel colouring.
+Consequently FE alone extends any finite family of prescribed Borel
+chains; AS is unnecessary. The dated research rounds below are retained
+as a record of earlier partial results and failed approaches. Their
+statements that the unrestricted problem was unresolved describe the
+status at those dates, not the current status.
+
 ## Research round: 2026-09-07
 
 Repository: `jlhscu/Borel-poset-extend`, branch `main`.
@@ -1713,3 +1725,55 @@ The relative binary-order repair in Section 17.4 is refuted, rather
 than left as a conjectural substitute for the main problem.
 
 The main manuscript is unchanged.
+
+## 2026-09-29 — HMS-only input and formal manuscript
+
+The manuscript now presents the anchored chain extension theorem as the
+main finite-width prescription result, with finite-list colouring used in
+its proof. The earlier comparison with the one-seed puncturing approach
+has been removed from the article. The general graph criterion
+AS + AD + PU, the two-colour theorem, simultaneous saturation,
+and the height-three antichain counterexample remain separate results.
+
+The list proof no longer invokes finite Borel Dilworth. For a feasible
+n-list assignment, width(P) <= n. HMS Theorem 5.1 gives a Borel map
+g:X -> omega with chain fibres, and the proof of HMS Theorem 3.1
+gives an injective Borel monotone map f:X -> 2^alpha for countable alpha.
+In the real-valued refinement lemma the auxiliary parameter is now
+a profile (K_ij) indexed by i<n and j<omega. The hyperspace of
+compact subsets of [0,1], including the empty set, is compact
+metrizable; its countable product over n x omega is again compact
+metrizable. Each constraint still mentions only finitely many profile
+coordinates. The union of one-sided isolated points of all K_ij is
+countable, and the rational-gap construction enumerates a Borel
+superset uniformly. Thus the compact choice, feasible-ban reflection,
+and countable-range refinement arguments all remain valid.
+
+At countable limit stages, finite feasibility passes to the
+intersection of decreasing lists because a finite set sees only
+finitely many removed colours. A positive weighted sum of the
+earlier real coordinates represents the lexicographic limit prefix
+inside each refined fibre. At the final stage the injectivity of f
+makes each fibre countable, and Lusin--Novikov enumeration plus
+finite-palette compactness yields a Borel colouring.
+
+The main manuscript has been reorganized as a standalone paper:
+graph saturation, prescriptions and the two-colour theorem, the
+conditional general-graph criterion, prescribed chains and the
+finite-list proof, preservation of the locked template, and the
+height-three antichain obstruction. It uses finite ordinals as
+palettes (n = {0,...,n-1}), suppresses unused equation numbers,
+removes process notes, and pares unused bibliography entries.
+The conditional graph theorem retains PU explicitly; no claim that
+FE or AD alone proves a general-graph extension has been introduced.
+The earlier failed finite examples remain recorded in the dated
+research logs.
+
+The mathematical review checked the compact-profile choice,
+joint feasibility of analytic bans, HMS successor and limit
+induction, the saturation template, parity theorem, conditional
+PU/AD induction, rotation gadget, and template-preservation
+corollary. No gap was found in these arguments; this is an internal
+proof review rather than external refereeing. The source compiled
+without LaTeX warnings, and its figures and page layout were
+visually inspected.
