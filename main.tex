@@ -1,11 +1,12 @@
 \documentclass[11pt,reqno]{amsart}
 
-\usepackage[margin=1.1in]{geometry}
+\usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage{microtype}
+\usepackage[expansion=false]{microtype}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc}
 \usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Simultaneous Borel saturation for chains and antichains, and the prescription problem}}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
@@ -47,36 +48,26 @@
 \title[Simultaneous Borel saturation]{Simultaneous Borel saturation for chains
 and antichains, and the prescription problem}
 
-\author{}
-\address{}
-\email{}
-
 \subjclass[2020]{03E15, 06A07, 05C15, 05C69}
 
 \keywords{Dilworth's theorem, Mirsky's theorem, Greene--Kleitman theorem,
 saturated partition, Borel graph, Borel chromatic number, list colouring}
 
 \begin{abstract}
-We prove that every Borel partial order admits, for each $r\ge1$, a Borel
-partition into chains which is simultaneously $r$- and $(r+1)$-saturated in
-the sense of Greene and Kleitman. For orders of finite height we obtain the
-corresponding Borel partition into antichains. Both saturation statements
-follow from a graph-theoretic theorem combining finite simultaneous
-saturation with exact Borel colourings.
-We then prove a list-colouring extension theorem: a Borel list assignment
-from a fixed finite palette on the incomparability graph of a Borel partial
-order has a Borel colouring whenever every finite induced problem is
-solvable. Consequently, finitely many prescribed Borel chains extend to a
-Borel partition into the prescribed number of chains exactly when they
-satisfy the finite extension condition; anchor saturation is unnecessary.
-The proof uses compact auxiliary data, analytic separation, and a countable
-transfinite refinement along the Harrington--Marker--Shelah representation.
-In particular, the finite locked templates in the saturation proof can be
-preserved block by block. For two colours, a separate parity argument treats
-chains and antichains simultaneously. The antichain extension statement
-fails already at height three: we construct three finite prescribed
-antichains satisfying both finite extension and anchor saturation but
-admitting no Borel extension.
+We prove Borel simultaneous saturation theorems for chain partitions of
+partial orders and, at finite height, for antichain partitions. The proof
+passes through a graph theorem that combines finite simultaneous saturation
+with exact Borel colouring. We also study prescribed blocks. Any finite
+family of Borel chains whose prescription is consistent on every finite set
+extends to a Borel chain partition with the same labels. More generally,
+every feasible Borel finite-list assignment on the incomparability graph of
+a Borel partial order has a Borel colouring. This result follows from the
+countable chain cover and lexicographic representation of
+Harrington--Marker--Shelah, together with compactness and analytic
+separation. For two blocks, a parity argument applies to both chains and
+antichains. In contrast, we give a height-three Borel order with three
+prescribed finite antichains that have an abstract extension and satisfy
+anchor saturation but have no Borel extension.
 \end{abstract}
 
 \maketitle
@@ -84,194 +75,139 @@ admitting no Borel extension.
 \section{Introduction}
 \label{sec:intro}
 
-Dilworth's theorem is one of the basic duality principles in the theory of
-partially ordered sets. In its classical finite form, it says that the width of
-a poset, namely the maximum size of an antichain, is equal to the least number
-of chains needed to partition the poset~\cite{Dilworth1950}. Equivalently, a
-finite poset of width $n$ admits a partition into $n$ chains. This result has
-served as a point of contact between order theory, matching theory, extremal set
-theory, and, more recently, descriptive combinatorics.
-
-There are two natural directions in which Dilworth's theorem has been extended.
-The first is definability-theoretic. If the underlying set is a standard Borel
-space and the order relation is Borel, one may ask whether a purely
-combinatorial chain decomposition can be chosen in a Borel way. Harrington,
-Marker, and Shelah proved a fundamental countable-width theorem: a thin Borel
-partial order is a union of countably many Borel
-chains~\cite{HarringtonMarkerShelah1988}. In particular, a Borel partial order
-with no uncountable antichain, and hence every Borel partial order of countable
-width, admits a countable Borel chain cover. Their theorem fits naturally into
-the general pattern of descriptive-set-theoretic dichotomies: either a definable
-object admits a definable countable decomposition, or it contains a large
-perfect obstruction. This point of view was later clarified through the
-graph-theoretic approach to descriptive set theory. Applied to the
-incomparability graph of a partial order, the Kechris--Solecki--Todorcevic $G_0$
-dichotomy gives a topological route to countable Borel decompositions and
-perfect antichain alternatives~\cite{KechrisSoleckiTodorcevic1999}. Miller's
-work emphasized that many classical dichotomy theorems, including the
-Harrington--Marker--Shelah phenomenon, can be reproved and generalized by
-isolating the appropriate Borel graph and then using Baire category
-arguments~\cite{Miller2012}. At the finite-width level, Kada obtained a Borel
-version of Dilworth's theorem, and Carroy, Miller, and Vidny\'anszky later gave
-a broad definable strengthening: under suitable definability hypotheses, either a
-quasi-order is covered by $k$ Borel chains or it contains an antichain of size
-$k+1$~\cite{Kada1989, CarroyMillerVidnyanszky2021}.
-
-The second direction is finite-combinatorial. Greene and Kleitman refined
-Dilworth's theorem by replacing antichains with unions of several disjoint
-antichains~\cite{GreeneKleitman1976}. If $P$ is a finite poset and $t\ge1$, let
+Dilworth's theorem identifies the width of a finite partial order with
+the least number of chains needed to partition it~\cite{Dilworth1950}.
+Mirsky's theorem gives the dual statement for height and antichains
+\cite{Mirsky1971}. Greene and Kleitman strengthened these results by
+considering unions of several antichains at once
+\cite{GreeneKleitman1976}. If $P$ is a poset and $r\ge1$, put
 \[
-\alpha_t(P)
-=\max\bigl\{|A_0\cup\cdots\cup A_{t-1}|:
-A_0,\ldots,A_{t-1}\ \text{are pairwise disjoint antichains}\bigr\}.
+\alpha_r(P)=\sup\bigl\{|A_0\cup\cdots\cup A_{r-1}|:
+ A_0,\ldots,A_{r-1}\text{ are disjoint antichains}\bigr\}.
 \]
-For a chain partition $\mathcal C$ of $P$, define
-\[
-\lVert\mathcal C\rVert_t=\sum_{C\in\mathcal C}\min\{|C|,t\}.
-\]
-This quantity is an upper bound for $\alpha_t(P)$. A chain partition is called
-$t$-saturated if equality holds. Dilworth's theorem is precisely the case
-$t=1$. Greene and Kleitman proved the stronger simultaneous statement that, for
-every $t$, every finite poset has a chain partition which is both $t$-saturated
-and $(t+1)$-saturated. Simultaneity is the whole point: it is what makes the
-result a theorem rather than a sequence of independent optimisations, and all
-known proofs of it are finitary~\cite{GreeneKleitman1976, Greene1976, Saks1979,
-Frank1980}. Mirsky's theorem~\cite{Mirsky1971}, that a poset of height $h$ is a
-union of $h$ antichains, is the case $t=1$ of the dual refinement, obtained by
-interchanging the roles of chains and antichains throughout.
+For a chain partition $\mathcal C$, the quantity
+$\sum_{C\in\mathcal C}(|C|\wedge r)$ is at least $\alpha_r(P)$.
+The finite Greene--Kleitman theorem produces a partition attaining
+equality simultaneously for $r$ and $r+1$. Interchanging chains and
+antichains gives the corresponding assertion for finite height.
 
-The purpose of this paper is to bring these two directions together. We ask
-whether the Greene--Kleitman saturation phenomenon persists for infinite posets,
-and whether, in the definable setting, the saturated chain partition can be
-chosen Borel. Thus the question is not merely whether a finite-width Borel poset
-can be decomposed into the optimal number of Borel chains, but whether such a
-decomposition can also realize the Greene--Kleitman norms simultaneously. Our
-first result is the corresponding refinement.
+For a Borel partial order, definability becomes a separate issue.
+Harrington, Marker, and Shelah showed that a thin Borel order is covered
+by countably many Borel chains, and gave a lexicographic representation
+of such orders~\cite{HarringtonMarkerShelah1988}. The finite-width Borel
+Dilworth theorem was established by Kada and subsequently strengthened
+by Carroy, Miller, and Vidny\'anszky
+\cite{Kada1989,CarroyMillerVidnyanszky2021}. We use these results to
+ask for a Borel partition attaining two Greene--Kleitman bounds at the
+same time. The answer is positive.
 
 \begin{theoremA}
-Let $P$ be a Borel partial order on a standard Borel space $X$, and let
-$r\ge1$. Then $X$ admits a Borel partition into chains which is
-simultaneously $r$- and $(r+1)$-saturated. If moreover $P$ has finite height,
-then $X$ admits a Borel partition into antichains which is simultaneously
-$r$- and $(r+1)$-saturated for the dual norms.
+Let $P$ be a Borel partial order on a standard Borel space $X$ and
+$r\ge1$. There is a Borel chain partition $\mathcal C$ of $X$ that is
+simultaneously $r$- and $(r+1)$-saturated. If $P$ has finite height,
+there is also a Borel antichain partition simultaneously saturated for
+the dual norms.
 \end{theoremA}
 
-The two halves of Theorem A are proved at once. That Dilworth's and Mirsky's
-theorems are two readings of a single graph-theoretic phenomenon is classical:
-Mirsky's theorem says that a comparability graph satisfies $\chi=\cl$, and
-Dilworth's that the complement of a comparability graph does, and both are
-subsumed by the perfectness of comparability
-graphs~\cite{Berge1961,Lovasz1972}. On the Greene--Kleitman side, the passage
-from orders to graphs and digraphs was begun by Linial~\cite{Linial1981} and
-Berge~\cite{Berge1982} and pursued by Cameron~\cite{Cameron1986} and
-Frank~\cite{Frank1980}; we make no use of their results, but we take from them
-the formulation. Throughout, then, chains and antichains are read as independent
-sets and cliques of the incomparability graph, or of the comparability graph as
-the case requires, and Theorem A becomes a statement about Borel graphs
-(Theorem~\ref{thm:main-saturation}) resting on exactly two hypotheses: the
-Greene--Kleitman theorem for the finite induced subgraphs of $G$, and the
-existence of exact Borel colourings of the Borel induced subgraphs of $G$. The
-first is finite combinatorics, the second is the Borel Dilworth or Borel Mirsky
-theorem. The proof, in \S\ref{sec:saturation}, extracts from the finite theorem a
-finite \emph{locked template} whose \emph{active blocks} carry all of the norms,
-and then replaces the active blocks by an exact Borel colouring of the set they
-span.
+The common argument is a theorem about Borel graphs. It assumes finite
+simultaneous saturation on induced finite graphs and exact Borel
+colourability on Borel induced subgraphs. A finite set carries optimal
+clique packings for both norms. Compactness fixes a partition of this
+set compatible with every finite extension. The blocks that meet each
+packing to capacity are then replaced by an exact Borel colouring.
+For an incomparability graph these blocks are chains; for a
+comparability graph they are antichains. The finite inputs are the
+Greene--Kleitman theorem and its dual. The Borel inputs are respectively
+Borel Dilworth and Borel Mirsky.
 
-That last step replaces the active blocks; it does not preserve them. This is
-what leads to the second half of the paper, \S\ref{sec:prescription}. Call a
-family $E_0,\dots,E_{k-1}$ of pairwise disjoint independent Borel sets a
-\emph{prescription}, and ask whether it extends to a Borel partition
-$X=A_0\sqcup\dots\sqcup A_{k-1}$ into independent sets with $E_i\subseteq A_i$.
-There is an evident finite obstruction, and by compactness it is the only
-obstruction to the existence of an extension in the abstract, without
-definability: the prescription extends abstractly if and only if it extends on
-every finite set, a property we call $\mathrm{(FE)}_k$
-(Proposition~\ref{prop:compactness}). The question is whether $\mathrm{(FE)}_k$
-also suffices in the Borel category.
+There is a further question about the labels of the blocks. Given
+pairwise disjoint Borel independent sets $E_0,\ldots,E_{n-1}$ in a
+Borel graph, we seek a Borel independent partition
+$X=C_0\sqcup\cdots\sqcup C_{n-1}$ such that $E_i\subseteq C_i$.
+The obvious necessary condition is that the same requirement can be
+met on every finite subset of $X$. We call this the finite extension
+property, $\mathrm{(FE)}_n$. Compactness shows that it is equivalent to
+the existence of an abstract extension. Its Borel sufficiency depends
+on the graph.
 
-For $k=2$ it does, and again for chains and antichains at once.
+For two colours, the labels can be preserved in any Borel graph that
+already has a Borel proper $2$-colouring.
 
 \begin{theoremB}
-Let $G$ be a Borel graph on a standard Borel space $X$ admitting a Borel
-proper $2$-colouring, and let $E_0,E_1$ be a prescription satisfying
-$\mathrm{(FE)}_2$. Then $E_0,E_1$ extends to a Borel partition of $X$ into two
-independent sets. In particular this holds for the chains of a Borel order of
-width two and for the antichains of a Borel order of height two.
+Let $G$ be a Borel graph with a Borel proper $2$-colouring. Any
+prescription by two Borel independent sets satisfying
+$\mathrm{(FE)}_2$ extends to a Borel proper $2$-colouring.
 \end{theoremB}
 
-The proof, in \S\ref{subsec:two}, is a cocycle argument: any Borel proper
-$2$-colouring differs from the desired one by a flip which is constant on each
-connected component, $\mathrm{(FE)}_2$ says that the prescribed flip is well
-defined, and Burgess's invariant separation theorem~\cite{Burgess1979} makes it
-Borel. Only the weakest form of $\mathrm{(FE)}_2$ is used, namely its
-restriction to the vertex sets of paths, which we show to be equivalent to a
-bare parity condition. The hypothesis that $G$ be Borel $2$-colourable cannot be
-dropped, as the Schreier graph of an irrational rotation shows
-(Remark~\ref{rem:rotation}); in the two applications it is supplied for free.
+Indeed, the prescribed labels determine a flip of a background
+colouring on the components that meet the prescription. Path parity
+makes the flip consistent, and invariant analytic separation makes it
+Borel. Thus Theorem B applies to both chains of width-two Borel orders
+and antichains of height-two Borel orders.
 
-For more colours, chains and antichains behave differently. On the chain
-side, finite extension is still the only obstruction. In fact, we prove the
-stronger list-colouring statement below. A proper colouring from a list
-assignment $L:X\to\mathcal P([n])$ chooses at each $x$ a colour in $L(x)$
-and assigns different colours to incomparable points.
+For chains, finite extension suffices for every finite number of
+labels. The prescribed sets need not be finite.
 
 \begin{theoremC}
-Let $P=(X,\le_P)$ be a Borel partial order, let $n\ge1$, and let
-$L:X\to\mathcal P([n])$ be Borel. If every finite induced suborder admits a
-proper colouring of its incomparability graph from these lists, then there
-is a Borel proper colouring from $L$ on all of $X$.
-Consequently, a prescription by $n$ Borel chains extends to a Borel
-$n$-chain partition if and only if it satisfies $\mathrm{(FE)}_n$.
+Let $P=(X,\le_P)$ be a Borel partial order and $n\ge1$. Suppose
+$E_0,\ldots,E_{n-1}$ are pairwise disjoint Borel subsets of $X$ and
+every finite $F\subseteq X$ can be partitioned into chains
+$F=D_0\sqcup\cdots\sqcup D_{n-1}$ with $F\cap E_i\subseteq D_i$.
+Then there is a Borel chain partition
+$X=C_0\sqcup\cdots\sqcup C_{n-1}$ with $E_i\subseteq C_i$ for every
+$i<n$.
 \end{theoremC}
 
-The finite hypothesis already forces $\wdt(P)\le n$. The prescribed chains
-may be infinite, and no anchor saturation hypothesis is needed. The proof,
-in \S\ref{sec:list-extension}, refines all available colour lists at once.
-It maintains a Borel partition such that incomparable points in different
-parts have disjoint lists. Compact auxiliary data record the possible
-positions of target colours along a fixed background Borel chain partition.
-Analytic separation makes the resulting restrictions Borel while retaining
-all finite constraints. A countable transfinite construction along the
-Harrington--Marker--Shelah lexicographic representation then makes the parts
-countable, where a Borel solution can be chosen directly. No Borel selection
-from the space of colourings of an uncountable set is assumed.
+We prove a stronger finite-list theorem. At each point, a Borel list
+specifies the colours still available; finite feasibility is the only
+hypothesis. The proof keeps one joint abstract colouring possible while
+shrinking all lists. The countable Borel chain cover of
+Harrington--Marker--Shelah supplies a background chain label. Compact
+sets record where target colours may occur along these chains.
+Incomparability across distinct real positions then occurs only at
+countably many endpoints of gaps. Analytic separation turns the
+restrictions into Borel lists without losing joint feasibility. The
+lexicographic representation reduces the remaining problem to
+countable Borel fibres, where compactness yields a Borel choice. This
+proof also gives finite Borel Dilworth as the case in which every
+initial list is the full palette; the chain extension theorem does
+not use finite Borel Dilworth as an input.
 
-Theorem C also removes the loss of the active blocks in the saturation
-argument: \S\ref{sec:preserve-template} shows that the entire finite locked
-template can be retained. For general Borel graphs, we separately record a
-conditional puncturing principle in \S\ref{subsec:many}. It uses anchor
-saturation $\mathrm{(AS)}$, anchored decomposition $\mathrm{(AD)}$, and an
-explicit Borel puncturing hypothesis $\mathrm{(PU)}$; none of these is an
-additional assumption in Theorem C.
-
-On the antichain side there is a genuine Borel obstruction.
+For general Borel graphs, we give a separate sufficient condition in
+terms of anchored decomposition and a Borel puncturing property.
+These conditions support a stepwise extension that meets every
+maximum clique at each step. The distinction matters on the
+antichain side: finite extension alone fails at height three, even
+with saturated finite anchors.
 
 \begin{theoremD}
-There are a Borel partial order of height three on a standard Borel space
-and a prescription $E_0,E_1,E_2$ by three-element antichains which satisfies
-$\mathrm{(FE)}_3$ and $\mathrm{(AS)}$, but which extends to no Borel partition
-into three antichains.
+There are a Borel partial order of height three and three prescribed
+three-element Borel antichains satisfying $\mathrm{(FE)}_3$ and anchor
+saturation that admit an abstract partition into three antichains
+but no such Borel partition.
 \end{theoremD}
 
-The construction, in \S\ref{subsec:counterexample}, encodes the irrational
-rotation graph into a height-three order. Every proper $3$-colouring
-respecting the anchors induces a proper $2$-colouring of the rotation graph,
-so no such colouring is Borel. Attaching a three-element chain above each
-minimal anchor supplies $\mathrm{(AS)}$ without removing the obstruction.
-Thus the list extension theorem for incomparability graphs has no analogous
-statement for comparability graphs, even when the prescribed antichains are
-finite and saturated.
+The example encodes a Borel graph of ordinary chromatic number two
+and Borel chromatic number greater than two. Any Borel extension of
+the prescribed antichains would induce a Borel $2$-colouring of that
+graph. Thus Theorem C has no antichain analogue under the same finite
+hypothesis.
+
+We use the graph formulation for the saturation and two-colour
+results. We then treat the general conditional extension criterion,
+prove the chain theorem, and finish with the height-three example.
+The chain theorem also permits the finite optimal template in the
+saturation argument to be preserved block by block.
 
 \subsection*{Notation}
-
-All spaces are standard Borel. A \emph{graph} on $X$ is a symmetric irreflexive
-relation $G\subseteq X^2$; we write $x\,G\,y$ for $(x,y)\in G$ and
-$G\restr Y=G\cap(Y\times Y)$. For a partial order $P=(X,\le_P)$ we write
-$x\perp_Py$ for ``$x\neq y$ and $x,y$ are $\le_P$-incomparable''. We put
-$[k]=\{0,\dots,k-1\}$, and for $a,b\in\{0,1\}$ we let $a\oplus b$ be addition
-modulo $2$ and $\mathbf1_H$ the characteristic function of $H$. Partitions
-indexed by a set are allowed to have empty parts; unindexed partitions have
-none.
+All spaces are standard Borel. A graph on $X$ is a symmetric,
+irreflexive subset of $X^2$, and $G\restr Y=G\cap(Y\times Y)$.
+For a partial order $P$ we write $x\perp_Py$ when $x\ne y$ are
+incomparable. We identify each natural number $n$ with
+$\{0,\ldots,n-1\}$. Partitions indexed by $n$ may have empty
+parts; unindexed partitions have no empty parts. Addition modulo
+$2$ is denoted by $\oplus$, and $\mathbf1_H$ is the characteristic
+function of $H$.
 
 \section{Cliques, independent sets, and saturation}
 \label{sec:prelim}
@@ -343,7 +279,8 @@ independent sets of $G^{<}$ are the antichains and its cliques the chains,
 $\cl(G^{<})=\hgt(P)$, $\cl_t=\beta_t$, and $\lVert\cdot\rVert_t$ is the dual
 norm. Under this dictionary, $\mathrm{(FS)}$ for $G^{\perp}$ is the
 Greene--Kleitman theorem~\cite{GreeneKleitman1976} applied to the finite induced
-subposets, and for $G^{<}$ its antichain dual; $\mathrm{(EC)}$ with
+subposets, and for $G^{<}$ its antichain dual
+\cite[Theorem~3.1]{Greene1976}; $\mathrm{(EC)}$ with
 $\mathcal A=\mathcal P(X)$ is Dilworth's, resp.\ Mirsky's, theorem for orders of
 finite width, resp.\ height, and with $\mathcal A$ Borel it is the Borel
 Dilworth, resp.\ Borel Mirsky, theorem~\cite{Kada1989,
@@ -428,7 +365,7 @@ $F=\varnothing$ gives
 \label{def:active}
 A block $E\in\mathcal E$ is \emph{active} if $|E\cap U|=r$ and
 $|E\cap V|=r+1$. We list the active blocks as $E_0,\dots,E_{\ell-1}$ and put
-$E_I=\bigcup_{i\in I}E_i$ for $I\subseteq[\ell]$.
+$E_I=\bigcup_{i\in I}E_i$ for $I\subseteq\ell$.
 \end{definition}
 
 \begin{lemma}
@@ -486,8 +423,8 @@ $E_i\cup F_i\subseteq D_i$ is independent. If $\ell=0$ then every finite
 $F\subseteq X\setminus S$ is empty, i.e.\ $X=S$.
 \end{proof}
 
-From now on put $Y=(X\setminus S)\cup E_{[\ell]}$, so that
-$Y\cap S=E_{[\ell]}$.
+From now on put $Y=(X\setminus S)\cup E_{\ell}$, so that
+$Y\cap S=E_{\ell}$.
 
 \begin{lemma}
 \label{lem:clique-number}
@@ -498,10 +435,10 @@ $\cl(Y)=\ell$.
 A clique of size $\ell+1$ contains a finite one, so it suffices to bound
 finite cliques. Let $K\subseteq Y$ be a finite clique and $F=K\setminus S$;
 decomposing $F=F_0\sqcup\dots\sqcup F_{\ell-1}$ as in
-Lemma~\ref{lem:active-decomposition} and using $Y\cap S=E_{[\ell]}$ we get
+Lemma~\ref{lem:active-decomposition} and using $Y\cap S=E_{\ell}$ we get
 $K\subseteq\bigcup_{i<\ell}(E_i\cup F_i)$, and each $E_i\cup F_i$ is
 independent, hence meets $K$ at most once; so $|K|\le\ell$. Conversely, if
-$\ell>0$ then $\widetilde K_0\subseteq E_{[\ell]}\subseteq Y$ is a clique of
+$\ell>0$ then $\widetilde K_0\subseteq E_{\ell}\subseteq Y$ is a clique of
 size $\ell$ by Lemma~\ref{lem:active-points}, while if $\ell=0$ then $Y$ is
 empty by Lemma~\ref{lem:active-decomposition}.
 \end{proof}
@@ -538,8 +475,8 @@ $|C_i|\wedge r=r$; running the argument with $\widetilde L_{j'}$ $(j'\le r)$
 gives $|C_i|\wedge(r+1)=r+1$. By Lemma~\ref{lem:active-points} the active
 blocks satisfy the same two equalities, so $C_0,\dots,C_{\ell-1}$ contribute to
 the two norms exactly what $E_0,\dots,E_{\ell-1}$ contribute. Since
-$X=Y\sqcup(S\setminus E_{[\ell]})$ and the inactive blocks of $\mathcal E$
-partition $S\setminus E_{[\ell]}$ into finite independent sets,
+$X=Y\sqcup(S\setminus E_{\ell})$ and the inactive blocks of $\mathcal E$
+partition $S\setminus E_{\ell}$ into finite independent sets,
 \[
 \mathcal C=\{C_i:i<\ell\}\cup\bigl(\mathcal E\setminus\{E_i:i<\ell\}\bigr)
 \]
@@ -618,16 +555,6 @@ Corollary~\ref{cor:borel-antichain}.
 \end{proof}
 
 \begin{remark}
-\label{rem:infinite-height}
-The antichain half of Theorem A likewise holds without any assumption on the
-height as soon as one has the dual dichotomy, namely that a Borel partial
-order either contains a perfect chain or is covered by countably many Borel
-antichains: the two cases are then disposed of exactly as in
-Proposition~\ref{prop:infinite-width}. We do not know whether that dichotomy
-holds, and we do not use it.
-\end{remark}
-
-\begin{remark}
 Theorem~\ref{thm:main-saturation} uses no definability of $G$ itself; all the
 definability is concentrated in $\mathrm{(EC)}$, and is applied to the single
 set $Y$. In particular Corollaries~\ref{cor:borel-chain}
@@ -641,10 +568,9 @@ in the form of Aharoni and Korman~\cite{AharoniKorman1992}.
 \section{The prescription problem}
 \label{sec:prescription}
 
-The proof of Theorem~\ref{thm:main-saturation} discards the active blocks: the
-sets $C_i$ produced by $\mathrm{(EC)}$ agree with $E_i$ in no way beyond
-carrying the same contribution to the two norms. It is natural to ask for more,
-and this section is devoted to the resulting question.
+Exact colouring in Theorem~\ref{thm:main-saturation} gives the optimal
+norms without fixing the labels of the active blocks. We now ask when
+prescribed labels can also be retained.
 
 \subsection{Prescriptions and the finite obstruction}
 \label{subsec:prescription}
@@ -813,555 +739,16 @@ argument of \S\ref{sec:list-extension} uses the order structure instead
 and preserves all prescribed colours simultaneously.
 \end{remark}
 
-% Integrated 2026-09-29 from borel_list_extension.tex (research proof, 2026-09-28).
-% Full proof retained; references and notation reconciled with this manuscript.
-% Compilation checks do not constitute independent mathematical refereeing.
-\section{Borel list-colouring and prescribed chains}
-\label{sec:list-extension}
-
-\subsection{Lists and the auxiliary inputs}
-
-We work in ZFC. Fix a positive integer $n$. A list assignment
-is a Borel map $L:X\to\mathcal P([n])$, where the codomain is finite and discrete.
-For a graph $G$ on $X$, a proper $L$-colouring is a map $c:X\to[n]$ with
-$c(x)\in L(x)$ and $c(x)\ne c(y)$ whenever $xGy$. Call $L$ \emph{feasible}
-if every finite induced graph admits a proper colouring from its lists.
-By compactness of $[n]^X$, this is equivalent to the existence of an
-abstract proper $L$-colouring. Indeed, all vertex-list and edge constraints
-are closed finite-coordinate conditions in this product.
-
-\begin{theorem}[Borel list extension]\label{list-thm:main}
-Let $P=(X,\le_P)$ be a Borel partial order and $L:X\to\mathcal P([n])$ a
-Borel list assignment. If $L$ is feasible for the incomparability graph of
-$P$, then it has a Borel proper colouring.
-\end{theorem}
-
-This is the list-colouring assertion of Theorem C. Its hypothesis already
-implies $\wdt(P)\le n$: an antichain of size
-$n+1$ would be a finite obstruction. Thus no independent finite-width
-assumption is needed in the statement.
-
-\begin{corollary}[Prescribed Borel chains]\label{list-cor:prescription}
-Let $E_0,\ldots,E_{n-1}$ be pairwise disjoint Borel subsets of a Borel partial
-order. Suppose every finite $F\subseteq X$ has a partition into chains
-$F=D_0\sqcup\cdots\sqcup D_{n-1}$ with $F\cap E_i\subseteq D_i$. Then
-there are Borel chains $C_i\supseteq E_i$ with
-$X=C_0\sqcup\cdots\sqcup C_{n-1}$. Conversely, such a partition plainly
-implies the finite condition.
-\end{corollary}
-
-\begin{proof}
-Apply Theorem~\ref{list-thm:main} with $L(x)=\{i\}$ for $x\in E_i$, and
-$L(x)=[n]$ otherwise. The finite condition itself ensures that each $E_i$
-is a chain. Empty parts and infinite prescribed sets cause no exception.
-This proves the prescription assertion of Theorem C and, in particular,
-settles the width-three prescription problem without $\mathrm{(AS)}$.
-\end{proof}
-
-We use the following established results, in addition to elementary
-compactness and analytic separation.
-
-\smallskip
-\noindent\textbf{Borel Dilworth.}
-A Borel partial order of width at most $n$ admits a Borel proper
-$n$-colouring of its incomparability graph. This is a special case of
-Carroy--Miller--Vidny\'anszky~\cite[Theorem~1]{CarroyMillerVidnyanszky2021}.
-
-\smallskip
-\noindent\textbf{Lexicographic representation.}
-For a thin Borel partial order there are a countable ordinal $\alpha$ and
-a Borel injection $f:X\to2^\alpha$ such that
-\begin{equation}\label{list-eq:hms}
-x\le_P y\quad\Longrightarrow\quad f(x)\le_{\lex}f(y).
-\end{equation}
-This is the antisymmetric case of Harrington--Marker--Shelah
-\cite[Theorem~3.1 and its proof, p.~297]{HarringtonMarkerShelah1988}. The separation assertion in
-that proof is relevant: the constructed map distinguishes points not
-equivalent under the original quasi-order. Hence it is injective for a
-partial order, not merely a possibly constant monotone map. Finite width
-implies thinness.
-
-\smallskip
-\noindent\textbf{Compact-section projection and countable sections.}
-A Borel subset of a product with a compact metrizable second factor,
-all of whose sections are closed, has Borel projection. We use the
-compact case of the Arsenin--Kunugui theorem
-\cite[Theorem~35.46]{Kechris1995}; its projection formulation is also stated
-explicitly in \cite[pp.~191, 193]{HolickyZeleny2000}. We also use the Lusin--Novikov theorem
-\cite[Theorem~18.10]{Kechris1995}: a Borel relation with countable sections is
-a countable union of graphs of partial Borel functions, and its projection
-is Borel. At the end it supplies an enumeration of the fibres of a
-countable-to-one Borel map.
-
-The proof below does not assume a prescribed version of Borel Dilworth,
-a Borel selector for arbitrary closed subsets of an uncountable colouring
-product, or a Borel test for exact global feasibility.
-
-\subsection{Separation and compact auxiliary data}
-
-\begin{lemma}\label{list-lem:finite-cover}
-If $V_0,\ldots,V_{k-1}$ are coanalytic subsets of a standard Borel space $T$
-and $\bigcup_{i<k}V_i=T$, there is a Borel $h:T\to[k]$ with $t\in V_{h(t)}$.
-\end{lemma}
-
-\begin{proof}
-Put $A_i=T\setminus V_i$. We prove by induction that finitely many analytic
-sets with empty intersection have Borel supersets with empty intersection.
-The one-set case is immediate. For the induction step, separate
-$\bigcap_{i<k-1}A_i$ from $A_{k-1}$ by a Borel set $D$ containing the former
-and avoiding the latter. On $T\setminus D$, apply induction to the first
-$k-1$ sets, obtaining Borel hulls $B'_i$ with empty intersection. Then
-$B_i=D\cup B'_i$ for $i<k-1$, together with $B_{k-1}=T\setminus D$, are the
-required hulls. Now let $h(t)$ be the least $i$ with $t\notin B_i$.
-\end{proof}
-
-\begin{lemma}\label{list-lem:hull}
-Let $Z$ be standard Borel, let $R_m\subseteq Z^m$ be analytic for every
-$m\ge1$, and let $A\subseteq Z$ be analytic. If $R_m\cap A^m=\varnothing$
-for all $m$, there is a Borel $B\supseteq A$ with
-$R_m\cap B^m=\varnothing$ for all $m$.
-\end{lemma}
-
-\begin{proof}
-Fix $m$. Enlarge the $m$ coordinate copies of $A$ one at a time. Having
-chosen Borel $B_1,\ldots,B_{j-1}$ containing $A$, with $R_m$ disjoint from
-$B_1\times\cdots\times B_{j-1}\times A^{m-j+1}$, project
-\[
-R_m\cap(B_1\times\cdots\times B_{j-1}\times Z\times A^{m-j})
-\]
-onto coordinate $j$. This projection is analytic and disjoint from $A$.
-Analytic separation gives a Borel $B_j\supseteq A$ avoiding it. At the end,
-$R_m$ avoids $(B^{(m)})^m$ for $B^{(m)}=\bigcap_{j=1}^m B_j$.
-Take $B=\bigcap_{m\ge1}B^{(m)}$.
-\end{proof}
-
-We shall use this lemma for \emph{forbidden} colours rather than for
-positive assignments. This distinction allows whole colour lists to be
-refined without selecting one colour at a time.
-
-\begin{corollary}[Borel hull for feasible bans]\label{list-cor:bans}
-Let $G$ be Borel and $L$ a feasible Borel assignment from $[n]$. Let
-$A\subseteq X\times[n]$ be analytic, and suppose there is an abstract
-proper $L$-colouring avoiding all bans $(x,i)\in A$. Then there is a Borel
-$B\supseteq A$ such that
-\[
-L'(x)=L(x)\setminus\{i:(x,i)\in B\}
-\]
-is feasible.
-\end{corollary}
-
-\begin{proof}
-Let $R_m$ consist of $m$-tuples of bans which, when added to the original
-$G,L$ constraints, admit no full colouring. By compactness failure has a
-finite vertex witness. For fixed finitely many vertices and bans,
-nonexistence of a colouring is a finite Boolean combination of Borel
-conditions, because the palette is fixed and finite. Existential
-quantification over the finite witness makes $R_m$ analytic. The assumed
-colouring makes $R_m\cap A^m$ empty. Apply Lemma~\ref{list-lem:hull}.
-Every finite collection of bans in the resulting $B$ is feasible together
-with all original constraints. Compactness in $[n]^X$ then gives a full
-colouring avoiding $B$. In particular, no resulting vertex list is empty.
-\end{proof}
-
-We next isolate the uniform compactness argument. In its statement, a
-\emph{Borel family of closed finite-coordinate constraints} means the
-following. There are countably many constraint types. For a type of arity
-$r$, the indices form a Borel subset of
-\[
-\{(t,x_1,\ldots,x_r):x_j\in X_t\},
-\]
-and satisfaction is a Borel predicate in the index, an auxiliary parameter
-$k\in H$, and the $r$ colours. For each fixed index and fixed colour word,
-the satisfying set of $k$ is closed in $H$. Equality of colours at repeated
-vertices is understood. Several types can have the same arity.
-
-\begin{lemma}[Selection of compact auxiliary data]\label{list-lem:compact-choice}
-Let $T,Z$ be standard Borel, $W\subseteq T\times Z$ Borel, and
-$X_t=\{x:(t,x)\in W\}$. Let $H$ be compact metrizable. Suppose a Borel
-family of closed finite-coordinate constraints has a solution
-\[
-(k,d)\in H\times[n]^{X_t}
-\]
-for every $t$. There is a Borel $k:T\to H$ such that for every $t$ some
-full assignment $d$ satisfies all constraints with auxiliary parameter
-$k(t)$. No Borel choice of that full assignment is asserted.
-\end{lemma}
-
-\begin{proof}
-For a compact $C\subseteq H$, let $V_C$ be the parameters for which a full
-solution exists with $k\in C$. We claim that $V_C$ is coanalytic. The
-solution set is closed in the compact product $H\times[n]^{X_t}$.
-Thus failure with $k\in C$ is witnessed by finitely many constraint
-instances. For a fixed tuple of instances only finitely many vertex
-colourings need be considered. For each such colouring, the possible
-$k\in C$ form a compact section of a Borel relation. The compact-section
-projection theorem makes its nonemptiness a Borel condition. Finite
-unions over colourings therefore make the finite satisfiability test
-Borel. Quantifying existentially over the finite tuple of constraint
-indices makes $T\setminus V_C$ analytic, as claimed.
-
-Choose a finitely branching tree of nonempty compact subsets $C_s$ of
-$H$, with root $H$, each node covered by its children, children contained
-in their parent, and diameters tending to zero with the level. Such a
-tree is obtained by finite closed-ball covers of compact sets. For each
-$t$ choose a viable child at every step. This can be done Borelly using
-Lemma~\ref{list-lem:finite-cover}: on the Borel set of parameters which have
-arrived at a given node, the coanalytic viability sets of its finitely
-many children cover that set. There are only finitely many nodes at each
-level. The selected nested compact sets have one-point intersection
-$\{k(t)\}$, and the limit map $t\mapsto k(t)$ is Borel.
-
-For fixed $t$, the full solution sets with the selected successive compact
-restrictions are nonempty nested closed subsets of
-$H\times[n]^{X_t}$. Their intersection is nonempty by compactness, and its
-auxiliary coordinate is $k(t)$. This verifies all constraints, including
-those involving unmarked vertices. Empty $X_t$ present no difficulty.
-\end{proof}
-
-\begin{remark}
-The lemma does not say that the exact viable-profile relation is Borel,
-or choose its lexicographically least point. It chooses from Borel
-refinements of finitely many coanalytic viability sets. Compactness is
-used both for finite witnesses and for compatibility of the limiting
-auxiliary parameter with a single full assignment.
-\end{remark}
-
-\subsection{A countable-range refinement lemma}
-
-Fix $P$, write $G$ for its incomparability graph, and fix a Borel proper
-background colouring $g:X\to[n]$. Its colour classes are chains.
-The target lists need not respect these background colours.
-
-For a Borel map $q:X\to T$ and lists $L$, the invariant to be preserved is
-\begin{equation*}\label{list-eq:sep}
-xGy\ \text{ and }\ q(x)\ne q(y)
-\quad\Longrightarrow\quad L(x)\cap L(y)=\varnothing.
-\tag{S}
-\end{equation*}
-Thus any remaining potential same-colour edge is confined to a single
-$q$-fibre. A Borel map need not be onto its standard Borel codomain.
-
-\begin{lemma}[Countable-range refinement]\label{list-lem:refine}
-Suppose $q:X\to T$ and $\rho:X\to[0,1]$ are Borel, $L$ is Borel and
-feasible, and \eqref{list-eq:sep} holds. Assume
-\begin{equation}\label{list-eq:local-monotone}
-q(x)=q(y),\ x\le_P y\quad\Longrightarrow\quad\rho(x)\le\rho(y).
-\end{equation}
-There are a Borel refinement $q':X\to T'$, feasible Borel sublists
-$L'\subseteq L$, and Borel functions $a_m:T'\to[0,1]$, $m\in\N$, such that
-\begin{align}
-xGy,\ q'(x)\ne q'(y)&\quad\Longrightarrow\quad L'(x)\cap L'(y)=\varnothing,
-\label{list-eq:new-sep}\\
-\rho\bigl((q')^{-1}(\{t'\})\bigr)&\subseteq\{a_m(t'):m\in\N\}.
-\label{list-eq:enum}
-\end{align}
-Refinement means $q'(x)=q'(y)\Rightarrow q(x)=q(y)$. The sequence in
-\eqref{list-eq:enum} may contain repetitions and values not attained in the
-fibre.
-\end{lemma}
-
-\begin{proof}
-\noindent\emph{Compact profiles.}
-Let $\Kz$ be the hyperspace of nonempty compact subsets of $[0,1]$, with
-its usual Hausdorff metric topology, together with an isolated point representing
-the empty set. This is compact metrizable. Put
-\[
-H=(\Kz)^{[n]\times[n]}.
-\]
-A coordinate $K_{ij}$ will record a closed profile for target colour $i$
-on background chain $g^{-1}(\{j\})$.
-For real numbers $u,v$ write
-$I(u,v)=(\min\{u,v\},\max\{u,v\})$; it is empty if $u=v$.
-
-For $X_t=q^{-1}(\{t\})$, consider pairs $(K,d)\in H\times[n]^{X_t}$
-satisfying the proper $L$-colouring constraints and
-\begin{align}
-\rho(x)&\in K_{d(x),g(x)} &&(x\in X_t),\label{list-eq:membership}\\
-K_{d(x),g(y)}\cap I(\rho(x),\rho(y))&=\varnothing
-&&(x,y\in X_t,\ xGy).\label{list-eq:robust}
-\end{align}
-The second condition is imposed on \emph{ordered} incomparable pairs,
-so both directions are included. These are Borel finite-coordinate
-constraints, closed in $K$ for fixed vertices and colours: hyperspace
-membership is closed, and avoiding a fixed open interval is closed.
-Joint dependence on the interval endpoints is Borel (in fact the
-corresponding hit relation is open).
-
-\smallskip
-\noindent\emph{Existence of a full joint solution.}
-Fix any abstract proper $L$-colouring $d$ of $X_t$, and set
-\begin{equation}\label{list-eq:actual-profile}
-K_{ij}=\operatorname{cl}\{\rho(z):z\in X_t,\ d(z)=i,\ g(z)=j\}.
-\end{equation}
-We verify \eqref{list-eq:robust}. Suppose $xGy$, $\rho(x)<\rho(y)$, and the
-indicated profile meets the open interval. By the definition of closure,
-there is an actual $z\in X_t$ with
-\[
-d(z)=d(x),\qquad g(z)=g(y),\qquad
-\rho(x)<\rho(z)<\rho(y).
-\]
-The first equality makes $x,z$ comparable, and the second makes $z,y$
-comparable. Local monotonicity forces $x<_P z<_P y$, contradicting
-$xGy$. If $\rho(y)<\rho(x)$, the same reasoning yields
-$y<_P z<_P x$, also a contradiction. This verifies the constraints.
-Consequently Lemma~\ref{list-lem:compact-choice} gives Borelly chosen profiles
-$K_{ij}(t)$ admitting a full joint solution in every fibre.
-
-\smallskip
-\noindent\emph{Borel sublists which respect the profiles.}
-Ban a target colour $i$ at $x$ if either
-\[
-\rho(x)\notin K_{i,g(x)}(q(x)),
-\]
-or there exists $y$ with $q(y)=q(x)$, $xGy$, and
-\[
-K_{i,g(y)}(q(x))\cap I(\rho(x),\rho(y))\ne\varnothing.
-\]
-The set $A\subseteq X\times[n]$ of these bans is analytic: the first
-condition is Borel and the second is the projection of a Borel relation.
-Every $q$-fibre admits an original listed colouring avoiding all these
-bans, by the selected joint solution. For finitely many vertices, choose
-such a colouring separately in each of the finitely many fibres involved.
-Across different fibres \eqref{list-eq:sep} prevents a monochromatic edge.
-Thus the global list constraints together with all bans are finitely
-satisfiable, and compactness gives a full solution. Apply
-Corollary~\ref{list-cor:bans} to obtain feasible Borel sublists $L'\subseteq L$
-which avoid all bans.
-
-It follows that every allowed pair $(x,i)$ satisfies both profile
-conditions, regardless of whether $i$ is eventually chosen at $x$.
-This universal property of an allowed colour is what will prove
-\eqref{list-eq:new-sep}.
-
-\smallskip
-\noindent\emph{Uniformly countable exceptional values.}
-For a compact $K\subseteq[0,1]$ and $r\in\Q\cap[0,1]$, consider
-\[
-d_r^-(K)=\max(K\cap[0,r]),\qquad
-d_r^+(K)=\min(K\cap[r,1]),
-\]
-using $0$ when the relevant intersection is empty. These are Borel
-functions of $K$. For example, nonemptiness of an intersection with a
-fixed closed interval is Borel, and the threshold tests for its minimum
-and maximum are hit tests for fixed half-open intervals. Such an interval
-is a countable union of compact intervals, so these hit tests are Borel.
-Let $D_t$ be the countable set of all these values, for every rational
-$r$ and every profile $K_{ij}(t)$. It has an explicit enumeration by
-total Borel functions $d_m(t)$, and
-$\{(t,u):u\in D_t\}=\bigcup_m\{(t,d_m(t))\}$ is Borel.
-
-The set $D_t$ contains every point of any $K_{ij}(t)$ which is isolated
-from one side in that compact set. For a right-isolated $u<1$, choose a
-rational $r>u$ in the gap to obtain $u=d_r^-(K_{ij}(t))$; $u=1$ is handled
-by $r=1$. Left isolation is dual, with $r=0$ handling $u=0$.
-Extra values introduced by the default convention are harmless.
-
-Define the new labels in the standard Borel space
-$T'=T\times(\{\ast\}\sqcup[0,1])$ by
-\begin{equation}\label{list-eq:refinement}
-q'(x)=
-\begin{cases}
-(q(x),\ast),&\rho(x)\in D_{q(x)},\\
-(q(x),\rho(x)),&\rho(x)\notin D_{q(x)}.
-\end{cases}
-\end{equation}
-In an exceptional part the $\rho$-range is contained in $D_t$; in an
-ordinary part it is a singleton. Thus use
-$a_m(t,\ast)=d_m(t)$ and $a_m(t,u)=u$ to obtain \eqref{list-eq:enum}.
-
-\smallskip
-\noindent\emph{Every possible same-colour edge stays in a new part.}
-Suppose $xGy$ and $i\in L'(x)\cap L'(y)$. The old separation invariant
-implies $q(x)=q(y)=t$. If $\rho(x)=\rho(y)$, their new labels agree.
-Otherwise suppose $\rho(x)<\rho(y)$. Membership at $x$, together with
-\eqref{list-eq:robust} for the allowed pair $(y,i)$, gives
-\[
-\rho(x)\in K_{i,g(x)}(t),\qquad
-K_{i,g(x)}(t)\cap(\rho(x),\rho(y))=\varnothing.
-\]
-Thus $\rho(x)$ is right-isolated in this profile. Similarly,
-$\rho(y)$ is left-isolated in $K_{i,g(y)}(t)$. Both belong to $D_t$, so
-$q'(x)=q'(y)=(t,\ast)$. This proves \eqref{list-eq:new-sep} and the lemma.
-\end{proof}
-
-\begin{remark}\label{list-rem:what-refinement-does}
-The lemma does not make the new parts countable: an exceptional part can
-still contain uncountable fibres of $\rho$. It makes the \emph{range of
-$\rho$} countable in each new part and supplies uniform enumerations of
-countable supersets. The distinction is essential for the next section.
-Neither $q(X)$ nor $\rho(X)$ is assumed Borel.
-\end{remark}
-
-\subsection{Countable transfinite reduction to countable fibres}
-
-We give the construction in full, including successor coding and the
-preservation of feasibility at countable limit stages.
-
-\begin{proposition}\label{list-prop:countable-parts}
-Let $P$ have a Borel background partition into $n$ chains and an injective
-Borel map $f:X\to2^\alpha$ satisfying \eqref{list-eq:hms}, for countable
-$\alpha$. For every feasible finite-palette Borel $L$, there are feasible
-Borel sublists $L_\ast\subseteq L$ and a countable-to-one Borel map
-$q_\ast:X\to T_\ast$ satisfying \eqref{list-eq:sep} for $L_\ast,q_\ast$.
-\end{proposition}
-
-\begin{proof}
-For every $\beta\le\alpha$ construct Borel maps
-$q_\beta:X\to T_\beta$ and $u_\beta:X\to[0,1]$, Borel feasible lists
-$L_\beta\subseteq L$, and total Borel functions
-$a_m^\beta:T_\beta\to[0,1]$, so that:
-\begin{enumerate}
-\item[(a)] the $q_\beta$ refine one another and the $L_\beta$ decrease;
-\item[(b)] \eqref{list-eq:sep} holds for $q_\beta,L_\beta$;
-\item[(c)] inside a $q_\beta$-fibre, $u_\beta$ exactly represents the
-lexicographic order of $f\restr\beta$: for such $x,y$,
-\begin{equation}\label{list-eq:prefix-order}
-u_\beta(x)\le u_\beta(y)
-\quad\Longleftrightarrow\quad
-f(x)\restr\beta\le_{\lex}f(y)\restr\beta;
-\end{equation}
-\item[(d)]
-$u_\beta(q_\beta^{-1}(\{t\}))\subseteq
-\{a_m^\beta(t):m\in\N\}$.
-\end{enumerate}
-All target spaces are standard Borel. Enumerations may repeat and contain
-unused values. In particular \eqref{list-eq:prefix-order} asserts equality of
-real values exactly when the corresponding prefixes are equal in a fibre.
-
-\smallskip
-\noindent\emph{Initial stage.}
-Take $q_0$ constant, $u_0=0$, $L_0=L$, and $a_m^0=0$. All invariants hold.
-
-\smallskip
-\noindent\emph{Successor stage.}
-Keep $q_{\beta+1}=q_\beta$ and $L_{\beta+1}=L_\beta$.
-For $t\in T_\beta$ and $r\in[0,1]$ put
-\begin{align*}
-A_t(r)&=\sum_{m\ge0}2^{-m-1}\ind_{\{a_m^\beta(t)<r\}},\\
-M_t(r)&=\sum_{m\ge0}2^{-m-1}\ind_{\{a_m^\beta(t)=r\}},\\
-F_t(r,b)&=A_t(r)+\frac{1+b}{3}M_t(r)\qquad(b\in\{0,1\}).
-\end{align*}
-These functions are Borel. Every actual $u_\beta$-value has strictly
-positive mass $M_t(r)$. For actual values $r<s$,
-\[
-F_t(r,b)<A_t(r)+M_t(r)\le A_t(s)<F_t(s,b'),
-\]
-and $F_t(r,0)<F_t(r,1)$. Thus $F_t$ inserts two ordered values strictly
-inside a positive interval assigned to each old value; it respects the
-lexicographic order of the old value followed by one bit, even when the
-countable old range is dense.
-Define
-\begin{equation}\label{list-eq:successor}
-u_{\beta+1}(x)=F_{q_\beta(x)}\bigl(u_\beta(x),f(x)(\beta)\bigr).
-\end{equation}
-This verifies (c). Enumerate
-$F_t(a_m^\beta(t),b)$ for $(m,b)\in\N\times\{0,1\}$ to obtain (d).
-Repetitions in the old enumeration do not affect positivity or the order
-inequalities. The other invariants are unchanged.
-
-\smallskip
-\noindent\emph{Limit stage.}
-Let $0<\lambda\le\alpha$ be a limit ordinal. First form
-\begin{equation}\label{list-eq:limit-preliminary}
-q^-_\lambda(x)=(q_\beta(x))_{\beta<\lambda},\qquad
-L^-_\lambda(x)=\bigcap_{\beta<\lambda}L_\beta(x).
-\end{equation}
-The target of $q^-_\lambda$ is a countable product of standard Borel
-spaces. Both objects are Borel.
-
-We check feasibility explicitly. For a finite $F\subseteq X$, each ban
-$(x,i)$ with $x\in F$ and $i\notin L^-_\lambda(x)$ occurs at some earlier
-stage. There are only finitely many such pairs. Therefore one
-$\beta_0<\lambda$ contains all these bans and
-\[
-L^-_\lambda(x)=L_{\beta_0}(x)\qquad(x\in F).
-\]
-A colouring witnessing feasibility at that stage colours $F$ from its
-limit lists. Hence $L^-_\lambda$ is feasible. If an edge has a colour
-allowed at both ends by $L^-_\lambda$, invariant (b) puts its endpoints
-in the same $q_\beta$-fibre for every $\beta<\lambda$. Thus the separation
-invariant also holds for $q^-_\lambda,L^-_\lambda$.
-
-Choose an increasing cofinal sequence $(\beta_m)_{m\ge0}$ in $\lambda$ and
-set
-\begin{equation}\label{list-eq:limit-real}
-v_\lambda(x)=\sum_{m\ge0}2^{-m-1}u_{\beta_m}(x).
-\end{equation}
-Inside a fixed $q^-_\lambda$-fibre, this exactly represents the order of
-$f\restr\lambda$. Indeed, equal prefixes give equal values in every
-summand. For distinct prefixes let $\delta<\lambda$ be the first
-coordinate of disagreement. All summand inequalities have the same
-orientation, by (c), and every summand with $\beta_m>\delta$ is strict.
-The positive weighted sum is therefore strictly ordered in the required
-direction. In particular $v_\lambda$ is nondecreasing on $P$ within each
-$q^-_\lambda$-fibre.
-
-Apply Lemma~\ref{list-lem:refine} to $q^-_\lambda,L^-_\lambda,v_\lambda$.
-Let $q_\lambda,L_\lambda$ be its outputs, put $u_\lambda=v_\lambda$,
-and use its enumerating functions for $a_m^\lambda$. The refinement
-preserves the exact prefix comparison, since it only splits fibres.
-All four invariants follow.
-
-\smallskip
-\noindent\emph{Termination.}
-There are only countably many stages, so the construction uses only
-countably many Borel choices, products and intersections; each of the
-constructed maps and lists is Borel. At stage $\alpha$, (c) and the
-injectivity of $f$ make $u_\alpha$ injective within each $q_\alpha$-fibre.
-By (d), that fibre is countable. Take
-$q_\ast=q_\alpha$ and $L_\ast=L_\alpha$. The case $\alpha=0$ is included:
-then injectivity forces $|X|\le1$.
-\end{proof}
-
-\begin{lemma}\label{list-lem:finish}
-Let $G$ be Borel, let $q:X\to T$ be Borel and countable-to-one, and let
-$L$ be feasible Borel finite-palette lists satisfying \eqref{list-eq:sep}.
-Then $G$ has a Borel proper $L$-colouring.
-\end{lemma}
-
-\begin{proof}
-By Lusin--Novikov, $q(X)$ is Borel and there are total Borel maps
-$b_m:q(X)\to X$ enumerating every fibre. To obtain total maps, first
-choose the value of the least defined partial enumerator, and use it to
-fill undefined entries in the other enumerators. Finite fibres are thus
-padded with repetitions.
-
-For $t\in q(X)$ the allowed sequences in $[n]^\N$ must assign equal colours
-to repeated vertices, different colours to adjacent vertices, and a colour
-from $L(b_m(t))$ at coordinate $m$. This is a nonempty compact set.
-A finite word $s$ is extendable precisely when for every $k\ge |s|$ there
-is a colouring of the first $k$ coordinates extending $s$ and meeting all
-these finite constraints. This condition is Borel in $t$: for each $k$
-there are finitely many possible words. Recursively select the least
-extendable next digit. The resulting full sequence $c_t$ depends Borelly
-on $t$. Colour $x$ by $c_{q(x)}(m)$ at the least $m$ with $b_m(q(x))=x$.
-This least-index function is Borel, and repetition constraints ensure
-consistency. The colouring is proper inside each fibre and respects $L$.
-If $xGy$ lie in different fibres, their lists are disjoint by
-\eqref{list-eq:sep}, so the same conclusion holds across fibres.
-\end{proof}
-
-\begin{proof}[Proof of Theorem~\ref{list-thm:main}]
-The empty space is immediate. Feasibility gives $\wdt(P)\le n$.
-Borel Dilworth supplies the finite background chain partition, and the
-Harrington--Marker--Shelah theorem supplies the injective monotone
-lexicographic representation. Apply Proposition~\ref{list-prop:countable-parts}
-and then Lemma~\ref{list-lem:finish}. The final colouring respects a sublist of
-$L$ at every point, so it solves the original problem.
-\end{proof}
-
-
-\section{A conditional puncturing principle}
+\section{An anchored decomposition criterion}
 \label{subsec:many}
 
-The list extension theorem above is specific to incomparability graphs.
-For general Borel graphs, we retain a separate conditional argument which
-removes one independent set at a time. Its hypotheses are stronger than
-finite extension and include the puncturing principle stated below.
+We first give a sufficient condition for prescriptions in general Borel
+graphs. The argument removes one independent set at a time while
+preserving the remaining anchors.
 Throughout this section $G$ is a Borel graph on $X$, $k\ge1$, and
 $E_0,\dots,E_{k-1}$ are pairwise disjoint nonempty finite independent sets
-with $\cl(X)\le k$. Write $I_t=\{t,\dots,k-1\}$, so $|I_t|=k-t$ and
-$I_k=\varnothing$.
+with $\cl(X)\le k$. For $I\subseteq k$ put $E_I=\bigcup_{i\in I}E_i$.
+Write $I_t=\{t,\dots,k-1\}$, so $|I_t|=k-t$ and $I_k=\varnothing$.
 
 \begin{definition}
 \label{def:AS-AD}
@@ -1373,7 +760,7 @@ $\{x_i:i<k\}$ is a clique;
 \item[$\mathrm{(AD)}$] \emph{(anchored decomposition)} if for every $t<k$
 and every finite $Z$ with
 \[
-E_{I_t}\subseteq Z\subseteq X\setminus E_{[k]\setminus I_t}
+E_{I_t}\subseteq Z\subseteq X\setminus E_{k\setminus I_t}
 \qquad\text{and}\qquad
 \cl(Z)\le k-t,
 \]
@@ -1388,7 +775,7 @@ strengthening of $\mathrm{(FE)}_k$ to the tail index sets, and the counterexampl
 
 \begin{lemma}
 \label{lem:AS-consequences}
-Assume $\mathrm{(AS)}$. Then, for every nonempty $I\subseteq[k]$, every
+Assume $\mathrm{(AS)}$. Then, for every nonempty $I\subseteq k$, every
 $j\in I$ and every $y\in E_j$, there is a clique $A\subseteq E_I$ with
 $y\in A$, $|A|=|I|$ and $|A\cap E_i|=1$ for $i\in I$. Consequently every
 independent set containing some $E_i$ is disjoint from $E_j$ for all $j\neq i$.
@@ -1454,7 +841,7 @@ E_i\subseteq C_i\quad(i<k).
 \end{theorem}
 
 \begin{proof}
-Put $E=E_{[k]}$, set $X_0=X$ and, once $C_0,\dots,C_{t-1}$ have been chosen,
+Put $E=E_{k}$, set $X_0=X$ and, once $C_0,\dots,C_{t-1}$ have been chosen,
 $X_t=X\setminus\bigcup_{s<t}C_s$. We maintain, for $t\le k$,
 \begin{equation*}
 X_t\ \text{is Borel},
@@ -1466,7 +853,7 @@ X_t\cap E=E_{I_t},
 \label{eq:invariants}
 \end{equation*}
 At $t=0$ the first two are trivial, and $\cl(X)=k$ follows from $\cl(X)\le k$
-together with Lemma~\ref{lem:AS-consequences} applied to $I=[k]$, which
+together with Lemma~\ref{lem:AS-consequences} applied to $I=k$, which
 produces a clique of size $k$; here we use that the $E_i$ are nonempty.
 
 Assume \eqref{eq:invariants} at some $t<k$ and put $m=k-t\ge1$. Then
@@ -1476,10 +863,10 @@ $E_t\subseteq X_t$, and $E_t$ is a finite, hence Borel, independent set.
 finite set with $E_{I_t}\subseteq Z\subseteq X_t$. The $E_i$ being pairwise
 disjoint, \eqref{eq:invariants} gives
 \[
-Z\cap E_{[k]\setminus I_t}\subseteq(X_t\cap E)\cap E_{[k]\setminus I_t}
-=E_{I_t}\cap E_{[k]\setminus I_t}=\varnothing,
+Z\cap E_{k\setminus I_t}\subseteq(X_t\cap E)\cap E_{k\setminus I_t}
+=E_{I_t}\cap E_{k\setminus I_t}=\varnothing,
 \]
-so $Z\subseteq X\setminus E_{[k]\setminus I_t}$; and
+so $Z\subseteq X\setminus E_{k\setminus I_t}$; and
 $\cl(Z)\le\cl(X_t)=m=|I_t|$. Hypothesis $\mathrm{(AD)}$ therefore yields
 $Z=\bigsqcup_{i\in I_t}P_i$ into independent sets with $E_i\subseteq P_i$, and
 the sets $P_i\cap H$ $(i\in I_t)$ partition $H$ into at most $m$ independent
@@ -1515,11 +902,563 @@ they are pairwise disjoint because $C_t\subseteq X_t$ misses $C_s$ for $s<t$.
 \begin{remark}
 \label{rem:AD-content}
 For $k\le2$ hypothesis $\mathrm{(AD)}$ is automatic given $\mathrm{(FE)}_k$:
-the only tail index sets are $I_0=[k]$, for which $\mathrm{(AD)}$ is
+the only tail index sets are $I_0=k$, for which $\mathrm{(AD)}$ is
 $\mathrm{(FE)}_k$, and $I_{k-1}=\{k-1\}$, for which the requirement
 $\cl(Z)\le1$ says that $Z$ is independent and the one-block partition serves.
-So the content of $\mathrm{(AD)}$ begins at $k=3$, which is where we now turn.
+Thus $\mathrm{(AD)}$ has additional content only when $k\ge3$.
 \end{remark}
+
+\section{Prescribed Borel chains}
+\label{sec:list-extension}
+
+\subsection{Lists and the auxiliary inputs}
+
+Fix $n\ge1$. A list assignment is a Borel map
+$L:X\to\mathcal P(n)$.
+For a graph $G$ on $X$, a proper $L$-colouring is a map $c:X\to n$ with
+$c(x)\in L(x)$ and $c(x)\ne c(y)$ whenever $xGy$. Call $L$ \emph{feasible}
+if every finite induced graph admits a proper colouring from its lists.
+By compactness of $n^X$, this is equivalent to the existence of an
+abstract proper $L$-colouring. Indeed, all vertex-list and edge constraints
+are closed finite-coordinate conditions in this product.
+
+\begin{theorem}[Borel list extension]\label{list-thm:main}
+Let $P=(X,\le_P)$ be a Borel partial order and $L:X\to\mathcal P(n)$ a
+Borel list assignment. If $L$ is feasible for the incomparability graph of
+$P$, then it has a Borel proper colouring.
+\end{theorem}
+
+An antichain of size $n+1$ would be a finite obstruction, so feasibility
+implies $\wdt(P)\le n$.
+
+\begin{corollary}[Prescribed Borel chains]\label{list-cor:prescription}
+Let $E_0,\ldots,E_{n-1}$ be pairwise disjoint Borel subsets of a Borel partial
+order. Suppose every finite $F\subseteq X$ has a partition into chains
+$F=D_0\sqcup\cdots\sqcup D_{n-1}$ with $F\cap E_i\subseteq D_i$. Then
+there are Borel chains $C_i\supseteq E_i$ with
+$X=C_0\sqcup\cdots\sqcup C_{n-1}$. Conversely, such a partition plainly
+implies the finite condition.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{list-thm:main} with $L(x)=\{i\}$ for $x\in E_i$, and
+$L(x)=n$ otherwise. The finite condition ensures that each $E_i$
+is a chain, and the resulting partition proves Theorem C.
+\end{proof}
+
+We use two results of Harrington, Marker, and Shelah
+\cite{HarringtonMarkerShelah1988}. A thin Borel partial order is covered
+by countably many Borel chains \cite[Theorem~5.1]{HarringtonMarkerShelah1988}.
+Taking successive differences gives a Borel map $g:X\to\omega$ whose
+fibres are chains. There are also a countable ordinal $\alpha$ and a
+Borel injection $f:X\to2^\alpha$ such that
+\begin{equation}\label{list-eq:hms}
+x\le_P y\quad\Longrightarrow\quad f(x)\le_{\lex}f(y).
+\end{equation}
+Indeed, the construction of the order-preserving map in
+\cite[Theorem~3.1 and its proof]{HarringtonMarkerShelah1988} separates
+points not equivalent under the order; it is injective for a partial
+order. Feasibility gives $\wdt(P)\le n$, so both results apply.
+
+\smallskip
+\noindent\textbf{Compact-section projection and countable sections.}
+A Borel subset of a product with a compact metrizable second factor,
+all of whose sections are closed, has Borel projection. We use the
+compact case of the Arsenin--Kunugui theorem
+\cite[Theorem~35.46]{Kechris1995}; its projection formulation is also stated
+explicitly in \cite[pp.~191, 193]{HolickyZeleny2000}. We also use the Lusin--Novikov theorem
+\cite[Theorem~18.10]{Kechris1995}: a Borel relation with countable sections is
+a countable union of graphs of partial Borel functions, and its projection
+is Borel. At the end it supplies an enumeration of the fibres of a
+countable-to-one Borel map.
+
+\subsection{Separation and compact auxiliary data}
+
+\begin{lemma}\label{list-lem:finite-cover}
+If $V_0,\ldots,V_{k-1}$ are coanalytic subsets of a standard Borel space $T$
+and $\bigcup_{i<k}V_i=T$, there is a Borel $h:T\to k$ with $t\in V_{h(t)}$.
+\end{lemma}
+
+\begin{proof}
+Put $A_i=T\setminus V_i$. We prove by induction that finitely many analytic
+sets with empty intersection have Borel supersets with empty intersection.
+The one-set case is immediate. For the induction step, separate
+$\bigcap_{i<k-1}A_i$ from $A_{k-1}$ by a Borel set $D$ containing the former
+and avoiding the latter. On $T\setminus D$, apply induction to the first
+$k-1$ sets, obtaining Borel hulls $B'_i$ with empty intersection. Then
+$B_i=D\cup B'_i$ for $i<k-1$, together with $B_{k-1}=T\setminus D$, are the
+required hulls. Now let $h(t)$ be the least $i$ with $t\notin B_i$.
+\end{proof}
+
+\begin{lemma}\label{list-lem:hull}
+Let $Z$ be standard Borel, let $R_m\subseteq Z^m$ be analytic for every
+$m\ge1$, and let $A\subseteq Z$ be analytic. If $R_m\cap A^m=\varnothing$
+for all $m$, there is a Borel $B\supseteq A$ with
+$R_m\cap B^m=\varnothing$ for all $m$.
+\end{lemma}
+
+\begin{proof}
+Fix $m$. Enlarge the $m$ coordinate copies of $A$ one at a time. Having
+chosen Borel $B_1,\ldots,B_{j-1}$ containing $A$, with $R_m$ disjoint from
+$B_1\times\cdots\times B_{j-1}\times A^{m-j+1}$, project
+\[
+R_m\cap(B_1\times\cdots\times B_{j-1}\times Z\times A^{m-j})
+\]
+onto coordinate $j$. This projection is analytic and disjoint from $A$.
+Analytic separation gives a Borel $B_j\supseteq A$ avoiding it. At the end,
+$R_m$ avoids $(B^{(m)})^m$ for $B^{(m)}=\bigcap_{j=1}^m B_j$.
+Take $B=\bigcap_{m\ge1}B^{(m)}$.
+\end{proof}
+
+We shall use this lemma for \emph{forbidden} colours rather than for
+positive assignments. This distinction allows whole colour lists to be
+refined without selecting one colour at a time.
+
+\begin{corollary}[Borel hull for feasible bans]\label{list-cor:bans}
+Let $G$ be Borel and $L$ a feasible Borel assignment from $n$. Let
+$A\subseteq X\times n$ be analytic, and suppose there is an abstract
+proper $L$-colouring avoiding all bans $(x,i)\in A$. Then there is a Borel
+$B\supseteq A$ such that
+\[
+L'(x)=L(x)\setminus\{i:(x,i)\in B\}
+\]
+is feasible.
+\end{corollary}
+
+\begin{proof}
+Let $R_m$ consist of $m$-tuples of bans which, when added to the original
+$G,L$ constraints, admit no full colouring. By compactness failure has a
+finite vertex witness. For fixed finitely many vertices and bans,
+nonexistence of a colouring is a finite Boolean combination of Borel
+conditions, because the palette is fixed and finite. Existential
+quantification over the finite witness makes $R_m$ analytic. The assumed
+colouring makes $R_m\cap A^m$ empty. Apply Lemma~\ref{list-lem:hull}.
+Every finite collection of bans in the resulting $B$ is feasible together
+with all original constraints. Compactness in $n^X$ then gives a full
+colouring avoiding $B$. In particular, no resulting vertex list is empty.
+\end{proof}
+
+We next isolate the uniform compactness argument. In its statement, a
+\emph{Borel family of closed finite-coordinate constraints} means the
+following. There are countably many constraint types. For a type of arity
+$r$, the indices form a Borel subset of
+\[
+\{(t,x_1,\ldots,x_r):x_j\in X_t\},
+\]
+and satisfaction is a Borel predicate in the index, an auxiliary parameter
+$k\in H$, and the $r$ colours. For each fixed index and fixed colour word,
+the satisfying set of $k$ is closed in $H$. Equality of colours at repeated
+vertices is understood. Several types can have the same arity.
+
+\begin{lemma}[Selection of compact auxiliary data]\label{list-lem:compact-choice}
+Let $T,Z$ be standard Borel, $W\subseteq T\times Z$ Borel, and
+$X_t=\{x:(t,x)\in W\}$. Let $H$ be compact metrizable. Suppose a Borel
+family of closed finite-coordinate constraints has a solution
+\[
+(k,d)\in H\times n^{X_t}
+\]
+for every $t$. There is a Borel $k:T\to H$ such that for every $t$ some
+full assignment $d$ satisfies all constraints with auxiliary parameter
+$k(t)$. No Borel choice of that full assignment is asserted.
+\end{lemma}
+
+\begin{proof}
+For a compact $C\subseteq H$, let $V_C$ be the parameters for which a full
+solution exists with $k\in C$. We claim that $V_C$ is coanalytic. The
+solution set is closed in the compact product $H\times n^{X_t}$.
+Thus failure with $k\in C$ is witnessed by finitely many constraint
+instances. For a fixed tuple of instances only finitely many vertex
+colourings need be considered. For each such colouring, the possible
+$k\in C$ form a compact section of a Borel relation. The compact-section
+projection theorem makes its nonemptiness a Borel condition. Finite
+unions over colourings therefore make the finite satisfiability test
+Borel. Quantifying existentially over the finite tuple of constraint
+indices makes $T\setminus V_C$ analytic, as claimed.
+
+Choose a finitely branching tree of nonempty compact subsets $C_s$ of
+$H$, with root $H$, each node covered by its children, children contained
+in their parent, and diameters tending to zero with the level. Such a
+tree is obtained by finite closed-ball covers of compact sets. For each
+$t$ choose a viable child at every step. This can be done Borelly using
+Lemma~\ref{list-lem:finite-cover}: on the Borel set of parameters which have
+arrived at a given node, the coanalytic viability sets of its finitely
+many children cover that set. There are only finitely many nodes at each
+level. The selected nested compact sets have one-point intersection
+$\{k(t)\}$, and the limit map $t\mapsto k(t)$ is Borel.
+
+For fixed $t$, the full solution sets with the selected successive compact
+restrictions are nonempty nested closed subsets of
+$H\times n^{X_t}$. Their intersection is nonempty by compactness, and its
+auxiliary coordinate is $k(t)$. This verifies all constraints, including
+those involving unmarked vertices. Empty $X_t$ present no difficulty.
+\end{proof}
+
+\subsection{A countable-range refinement lemma}
+
+Fix $P$, write $G$ for its incomparability graph, and take a Borel map
+$g:X\to\omega$ whose fibres are chains. The lists need not respect $g$.
+
+For a Borel map $q:X\to T$ and lists $L$, the invariant to be preserved is
+\begin{equation*}\label{list-eq:sep}
+xGy\ \text{ and }\ q(x)\ne q(y)
+\quad\Longrightarrow\quad L(x)\cap L(y)=\varnothing.
+\tag{S}
+\end{equation*}
+Thus any remaining potential same-colour edge is confined to a single
+$q$-fibre. A Borel map need not be onto its standard Borel codomain.
+
+\begin{lemma}[Countable-range refinement]\label{list-lem:refine}
+Suppose $q:X\to T$ and $\rho:X\to[0,1]$ are Borel, $L$ is Borel and
+feasible, and \eqref{list-eq:sep} holds. Assume
+\begin{equation*}
+q(x)=q(y),\ x\le_P y\quad\Longrightarrow\quad\rho(x)\le\rho(y).
+\end{equation*}
+There are a Borel refinement $q':X\to T'$, feasible Borel sublists
+$L'\subseteq L$, and Borel functions $a_m:T'\to[0,1]$, $m\in\N$, such that
+\begin{align}
+xGy,\ q'(x)\ne q'(y)&\quad\Longrightarrow\quad L'(x)\cap L'(y)=\varnothing,
+\label{list-eq:new-sep}\\
+\rho\bigl((q')^{-1}(\{t'\})\bigr)&\subseteq\{a_m(t'):m\in\N\}.
+\label{list-eq:enum}
+\end{align}
+Refinement means $q'(x)=q'(y)\Rightarrow q(x)=q(y)$. The sequence in
+\eqref{list-eq:enum} may contain repetitions and values not attained in the
+fibre.
+\end{lemma}
+
+\begin{proof}
+\noindent\emph{Compact profiles.}
+Let $\Kz$ be the hyperspace of nonempty compact subsets of $[0,1]$, with
+its usual Hausdorff metric topology, together with an isolated point
+representing the empty set. The following countable product is compact
+metrizable:
+\[
+H=(\Kz)^{n\times\omega}.
+\]
+A coordinate $K_{ij}$ will record a closed profile for target colour $i$
+on background chain $g^{-1}(\{j\})$.
+For real numbers $u,v$ write
+$I(u,v)=(\min\{u,v\},\max\{u,v\})$; it is empty if $u=v$.
+
+For $X_t=q^{-1}(\{t\})$, consider pairs $(K,d)\in H\times n^{X_t}$
+satisfying the proper $L$-colouring constraints and
+\begin{align}
+\rho(x)&\in K_{d(x),g(x)} &&(x\in X_t),\notag\\
+K_{d(x),g(y)}\cap I(\rho(x),\rho(y))&=\varnothing
+&&(x,y\in X_t,\ xGy).\label{list-eq:robust}
+\end{align}
+The second condition is imposed on \emph{ordered} incomparable pairs,
+so both directions are included. These are Borel finite-coordinate
+constraints, closed in $K$ for fixed vertices and colours: hyperspace
+membership is closed, and avoiding a fixed open interval is closed.
+Joint dependence on the interval endpoints is Borel (in fact the
+corresponding hit relation is open).
+
+\smallskip
+\noindent\emph{Existence of a full joint solution.}
+Fix any abstract proper $L$-colouring $d$ of $X_t$, and set
+\begin{equation*}
+K_{ij}=\operatorname{cl}\{\rho(z):z\in X_t,\ d(z)=i,\ g(z)=j\}.
+\end{equation*}
+We verify \eqref{list-eq:robust}. Suppose $xGy$, $\rho(x)<\rho(y)$, and the
+indicated profile meets the open interval. By the definition of closure,
+there is an actual $z\in X_t$ with
+\[
+d(z)=d(x),\qquad g(z)=g(y),\qquad
+\rho(x)<\rho(z)<\rho(y).
+\]
+The first equality makes $x,z$ comparable, and the second makes $z,y$
+comparable. Local monotonicity forces $x<_P z<_P y$, contradicting
+$xGy$. If $\rho(y)<\rho(x)$, the same reasoning yields
+$y<_P z<_P x$, also a contradiction. This verifies the constraints.
+Consequently Lemma~\ref{list-lem:compact-choice} gives Borelly chosen profiles
+$K_{ij}(t)$ admitting a full joint solution in every fibre.
+
+\smallskip
+\noindent\emph{Borel sublists which respect the profiles.}
+Ban a target colour $i$ at $x$ if either
+\[
+\rho(x)\notin K_{i,g(x)}(q(x)),
+\]
+or there exists $y$ with $q(y)=q(x)$, $xGy$, and
+\[
+K_{i,g(y)}(q(x))\cap I(\rho(x),\rho(y))\ne\varnothing.
+\]
+The set $A\subseteq X\times n$ of these bans is analytic: the first
+condition is Borel and the second is the projection of a Borel relation.
+Every $q$-fibre admits an original listed colouring avoiding all these
+bans, by the selected joint solution. For finitely many vertices, choose
+such a colouring separately in each of the finitely many fibres involved.
+Across different fibres \eqref{list-eq:sep} prevents a monochromatic edge.
+Thus the global list constraints together with all bans are finitely
+satisfiable, and compactness gives a full solution. Apply
+Corollary~\ref{list-cor:bans} to obtain feasible Borel sublists $L'\subseteq L$
+which avoid all bans.
+
+It follows that every allowed pair $(x,i)$ satisfies both profile
+conditions, regardless of whether $i$ is eventually chosen at $x$.
+This universal property of an allowed colour is what will prove
+\eqref{list-eq:new-sep}.
+
+\smallskip
+\noindent\emph{Uniformly countable exceptional values.}
+For a compact $K\subseteq[0,1]$ and $r\in\Q\cap[0,1]$, consider
+\[
+d_r^-(K)=\max(K\cap[0,r]),\qquad
+d_r^+(K)=\min(K\cap[r,1]),
+\]
+using $0$ when the relevant intersection is empty. These are Borel
+functions of $K$. For example, nonemptiness of an intersection with a
+fixed closed interval is Borel, and the threshold tests for its minimum
+and maximum are hit tests for fixed half-open intervals. Such an interval
+is a countable union of compact intervals, so these hit tests are Borel.
+Let $D_t$ be the countable set of all these values, for every rational
+$r$ and every profile $K_{ij}(t)$ with $i<n$, $j<\omega$. It has an
+enumeration by
+total Borel functions $d_m(t)$, and
+$\{(t,u):u\in D_t\}=\bigcup_m\{(t,d_m(t))\}$ is Borel.
+
+The set $D_t$ contains every point of any $K_{ij}(t)$ which is isolated
+from one side in that compact set. For a right-isolated $u<1$, choose a
+rational $r>u$ in the gap to obtain $u=d_r^-(K_{ij}(t))$; $u=1$ is handled
+by $r=1$. Left isolation is dual, with $r=0$ handling $u=0$.
+Extra values introduced by the default convention are harmless.
+
+Define the new labels in the standard Borel space
+$T'=T\times(\{\ast\}\sqcup[0,1])$ by
+\begin{equation*}
+q'(x)=
+\begin{cases}
+(q(x),\ast),&\rho(x)\in D_{q(x)},\\
+(q(x),\rho(x)),&\rho(x)\notin D_{q(x)}.
+\end{cases}
+\end{equation*}
+In an exceptional part the $\rho$-range is contained in $D_t$; in an
+ordinary part it is a singleton. Thus use
+$a_m(t,\ast)=d_m(t)$ and $a_m(t,u)=u$ to obtain \eqref{list-eq:enum}.
+
+\smallskip
+\noindent\emph{Every possible same-colour edge stays in a new part.}
+Suppose $xGy$ and $i\in L'(x)\cap L'(y)$. The old separation invariant
+implies $q(x)=q(y)=t$. If $\rho(x)=\rho(y)$, their new labels agree.
+Otherwise suppose $\rho(x)<\rho(y)$. Membership at $x$, together with
+\eqref{list-eq:robust} for the allowed pair $(y,i)$, gives
+\[
+\rho(x)\in K_{i,g(x)}(t),\qquad
+K_{i,g(x)}(t)\cap(\rho(x),\rho(y))=\varnothing.
+\]
+Thus $\rho(x)$ is right-isolated in this profile. Similarly,
+$\rho(y)$ is left-isolated in $K_{i,g(y)}(t)$. Both belong to $D_t$, so
+$q'(x)=q'(y)=(t,\ast)$. This proves \eqref{list-eq:new-sep} and the lemma.
+\end{proof}
+
+\subsection{Countable transfinite reduction to countable fibres}
+
+We give the construction in full, including successor coding and the
+preservation of feasibility at countable limit stages.
+
+\begin{proposition}\label{list-prop:countable-parts}
+Let $P$ admit a Borel map $g:X\to\omega$ with chain fibres and an injective
+Borel map $f:X\to2^\alpha$ satisfying \eqref{list-eq:hms}, for countable
+$\alpha$. For every feasible finite-palette Borel $L$, there are feasible
+Borel sublists $L_\ast\subseteq L$ and a countable-to-one Borel map
+$q_\ast:X\to T_\ast$ satisfying \eqref{list-eq:sep} for $L_\ast,q_\ast$.
+\end{proposition}
+
+\begin{proof}
+For every $\beta\le\alpha$ construct Borel maps
+$q_\beta:X\to T_\beta$ and $u_\beta:X\to[0,1]$, Borel feasible lists
+$L_\beta\subseteq L$, and total Borel functions
+$a_m^\beta:T_\beta\to[0,1]$, so that:
+\begin{enumerate}
+\item[(a)] the $q_\beta$ refine one another and the $L_\beta$ decrease;
+\item[(b)] \eqref{list-eq:sep} holds for $q_\beta,L_\beta$;
+\item[(c)] inside a $q_\beta$-fibre, $u_\beta$ exactly represents the
+lexicographic order of $f\restr\beta$: for such $x,y$,
+\begin{equation}\label{list-eq:prefix-order}
+u_\beta(x)\le u_\beta(y)
+\quad\Longleftrightarrow\quad
+f(x)\restr\beta\le_{\lex}f(y)\restr\beta;
+\end{equation}
+\item[(d)]
+$u_\beta(q_\beta^{-1}(\{t\}))\subseteq
+\{a_m^\beta(t):m\in\N\}$.
+\end{enumerate}
+All target spaces are standard Borel. Enumerations may repeat and contain
+unused values. In particular \eqref{list-eq:prefix-order} asserts equality of
+real values exactly when the corresponding prefixes are equal in a fibre.
+
+\smallskip
+\noindent\emph{Initial stage.}
+Take $q_0$ constant, $u_0=0$, $L_0=L$, and $a_m^0=0$. All invariants hold.
+
+\smallskip
+\noindent\emph{Successor stage.}
+Keep $q_{\beta+1}=q_\beta$ and $L_{\beta+1}=L_\beta$.
+For $t\in T_\beta$ and $r\in[0,1]$ put
+\begin{align*}
+A_t(r)&=\sum_{m\ge0}2^{-m-1}\ind_{\{a_m^\beta(t)<r\}},\\
+M_t(r)&=\sum_{m\ge0}2^{-m-1}\ind_{\{a_m^\beta(t)=r\}},\\
+F_t(r,b)&=A_t(r)+\frac{1+b}{3}M_t(r)\qquad(b\in\{0,1\}).
+\end{align*}
+These functions are Borel. Every actual $u_\beta$-value has strictly
+positive mass $M_t(r)$. For actual values $r<s$,
+\[
+F_t(r,b)<A_t(r)+M_t(r)\le A_t(s)<F_t(s,b'),
+\]
+and $F_t(r,0)<F_t(r,1)$. Thus $F_t$ inserts two ordered values strictly
+inside a positive interval assigned to each old value; it respects the
+lexicographic order of the old value followed by one bit, even when the
+countable old range is dense.
+Define
+\begin{equation*}
+u_{\beta+1}(x)=F_{q_\beta(x)}\bigl(u_\beta(x),f(x)(\beta)\bigr).
+\end{equation*}
+This verifies (c). Enumerate
+$F_t(a_m^\beta(t),b)$ for $(m,b)\in\N\times\{0,1\}$ to obtain (d).
+Repetitions in the old enumeration do not affect positivity or the order
+inequalities. The other invariants are unchanged.
+
+\smallskip
+\noindent\emph{Limit stage.}
+Let $0<\lambda\le\alpha$ be a limit ordinal. First form
+\begin{equation*}
+q^-_\lambda(x)=(q_\beta(x))_{\beta<\lambda},\qquad
+L^-_\lambda(x)=\bigcap_{\beta<\lambda}L_\beta(x).
+\end{equation*}
+The target of $q^-_\lambda$ is a countable product of standard Borel
+spaces. Both objects are Borel.
+
+We check feasibility explicitly. For a finite $F\subseteq X$, each ban
+$(x,i)$ with $x\in F$ and $i\notin L^-_\lambda(x)$ occurs at some earlier
+stage. There are only finitely many such pairs. Therefore one
+$\beta_0<\lambda$ contains all these bans and
+\[
+L^-_\lambda(x)=L_{\beta_0}(x)\qquad(x\in F).
+\]
+A colouring witnessing feasibility at that stage colours $F$ from its
+limit lists. Hence $L^-_\lambda$ is feasible. If an edge has a colour
+allowed at both ends by $L^-_\lambda$, invariant (b) puts its endpoints
+in the same $q_\beta$-fibre for every $\beta<\lambda$. Thus the separation
+invariant also holds for $q^-_\lambda,L^-_\lambda$.
+
+Choose an increasing cofinal sequence $(\beta_m)_{m\ge0}$ in $\lambda$ and
+set
+\begin{equation*}
+v_\lambda(x)=\sum_{m\ge0}2^{-m-1}u_{\beta_m}(x).
+\end{equation*}
+Inside a fixed $q^-_\lambda$-fibre, this exactly represents the order of
+$f\restr\lambda$. Indeed, equal prefixes give equal values in every
+summand. For distinct prefixes let $\delta<\lambda$ be the first
+coordinate of disagreement. All summand inequalities have the same
+orientation, by (c), and every summand with $\beta_m>\delta$ is strict.
+The positive weighted sum is therefore strictly ordered in the required
+direction. In particular $v_\lambda$ is nondecreasing on $P$ within each
+$q^-_\lambda$-fibre.
+
+Apply Lemma~\ref{list-lem:refine} to $q^-_\lambda,L^-_\lambda,v_\lambda$.
+Let $q_\lambda,L_\lambda$ be its outputs, put $u_\lambda=v_\lambda$,
+and use its enumerating functions for $a_m^\lambda$. The refinement
+preserves the exact prefix comparison, since it only splits fibres.
+All four invariants follow.
+
+\smallskip
+\noindent\emph{Termination.}
+There are only countably many stages, so the construction uses only
+countably many Borel choices, products and intersections; each of the
+constructed maps and lists is Borel. At stage $\alpha$, (c) and the
+injectivity of $f$ make $u_\alpha$ injective within each $q_\alpha$-fibre.
+By (d), that fibre is countable. Take
+$q_\ast=q_\alpha$ and $L_\ast=L_\alpha$. The case $\alpha=0$ is included:
+then injectivity forces $|X|\le1$.
+\end{proof}
+
+\begin{lemma}\label{list-lem:finish}
+Let $G$ be Borel, let $q:X\to T$ be Borel and countable-to-one, and let
+$L$ be feasible Borel finite-palette lists satisfying \eqref{list-eq:sep}.
+Then $G$ has a Borel proper $L$-colouring.
+\end{lemma}
+
+\begin{proof}
+By Lusin--Novikov, $q(X)$ is Borel and there are total Borel maps
+$b_m:q(X)\to X$ enumerating every fibre. To obtain total maps, first
+choose the value of the least defined partial enumerator, and use it to
+fill undefined entries in the other enumerators. Finite fibres are thus
+padded with repetitions.
+
+For $t\in q(X)$ the allowed sequences in $n^\N$ must assign equal colours
+to repeated vertices, different colours to adjacent vertices, and a colour
+from $L(b_m(t))$ at coordinate $m$. This is a nonempty compact set.
+A finite word $s$ is extendable precisely when for every $k\ge |s|$ there
+is a colouring of the first $k$ coordinates extending $s$ and meeting all
+these finite constraints. This condition is Borel in $t$: for each $k$
+there are finitely many possible words. Recursively select the least
+extendable next digit. The resulting full sequence $c_t$ depends Borelly
+on $t$. Colour $x$ by $c_{q(x)}(m)$ at the least $m$ with $b_m(q(x))=x$.
+This least-index function is Borel, and repetition constraints ensure
+consistency. The colouring is proper inside each fibre and respects $L$.
+If $xGy$ lie in different fibres, their lists are disjoint by
+\eqref{list-eq:sep}, so the same conclusion holds across fibres.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{list-thm:main}]
+The empty space is immediate. Feasibility gives $\wdt(P)\le n$.
+The Harrington--Marker--Shelah theorems give a Borel map to $\omega$
+with chain fibres and an injective monotone lexicographic
+representation. Apply Proposition~\ref{list-prop:countable-parts}
+and then Lemma~\ref{list-lem:finish}. The resulting colouring
+respects $L$.
+\end{proof}
+
+Taking $L(x)=n$ for every $x$ gives the finite Borel Dilworth
+theorem as a special case of Theorem~\ref{list-thm:main}, since
+finite Dilworth makes these lists feasible whenever
+$\wdt(P)\le n$.
+
+\subsection{Preserving the saturation template}
+\label{sec:preserve-template}
+
+We apply Theorem C to the active blocks of the finite template
+from Section~\ref{sec:saturation}.
+
+\begin{corollary}\label{cor:preserve-locked}
+Let $P$ be a Borel partial order of finite width, fix $r\ge1$, and let
+$U,V,S,\mathcal E$ be as in \S\ref{sec:saturation}, applied to the
+incomparability graph of $P$. In particular, $\mathcal E$ is a locked
+chain template on the finite set $S$.
+There is a finite Borel chain partition $\mathcal C$ of $X$ which extends
+$\mathcal E$ and is simultaneously $r$- and $(r+1)$-saturated.
+\end{corollary}
+
+\begin{proof}
+Let $E_0,\ldots,E_{\ell-1}$ be the active blocks of $\mathcal E$ and put
+\[
+Y=(X\setminus S)\cup\bigcup_{i<\ell}E_i.
+\]
+If $\ell=0$, Lemma~\ref{lem:active-decomposition} gives $X=S$, and the
+claim follows from \eqref{eq:template-norms}.
+Suppose $\ell>0$. For every finite $F\subseteq X\setminus S$,
+Lemma~\ref{lem:active-decomposition} partitions $F$ into sets $F_i$ such
+that each $E_i\cup F_i$ is a chain. Consequently the prescription
+$E_0,\ldots,E_{\ell-1}$ on $Y$ satisfies $\mathrm{(FE)}_\ell$.
+By Corollary~\ref{list-cor:prescription}, there are Borel chains
+\[
+Y=C_0\sqcup\cdots\sqcup C_{\ell-1},\qquad E_i\subseteq C_i.
+\]
+Since $Y\cap S=\bigcup_{i<\ell}E_i$ and the parts are disjoint,
+$C_i\cap S=E_i$. Retain every inactive block of $\mathcal E$ as a separate
+part. The resulting finite Borel chain partition $\mathcal C$ therefore
+extends $\mathcal E$.
+For $t\in\{r,r+1\}$, every active block has at least $t$ elements by
+Lemma~\ref{lem:active-points}. Thus $|C_i|\wedge t=|E_i|\wedge t=t$,
+and the inactive parts are unchanged. Equation~\eqref{eq:template-norms}
+now gives
+\[
+\lVert\mathcal C\rVert_r=\alpha_r(X),\qquad
+\lVert\mathcal C\rVert_{r+1}=\alpha_{r+1}(X).
+\qedhere
+\]
+\end{proof}
 
 \section{Three antichains: a Borel obstruction}
 \label{subsec:counterexample}
@@ -1600,7 +1539,7 @@ $\{e_j,t_j^{\,1},t_j^{\,2}\}$, and
 the chain $e_0<t_0^{\,1}<t_0^{\,2}$ realising the height. Note also that the
 anchors are pairwise incomparable and $\le_P$-minimal.
 
-\emph{The prescription.} Let $\pi_j:\{1,2\}\to[3]\setminus\{j\}$ be the
+\emph{The prescription.} Let $\pi_j:\{1,2\}\to3\setminus\{j\}$ be the
 increasing bijection, so
 $\pi_0=(1,2)\mapsto(1,2)$, $\pi_1=(1,2)\mapsto(0,2)$ and
 $\pi_2=(1,2)\mapsto(0,1)$, and put
@@ -1726,9 +1665,9 @@ Remark~\ref{rem:order-compatible} from applying.}
 \label{fig:saturation}
 \end{figure}
 
-\emph{Forcing.} Let $d:X\to[3]$ be any proper colouring of the comparability
+\emph{Forcing.} Let $d:X\to3$ be any proper colouring of the comparability
 graph of $P$ with $d(e_i)=i$ for $i<3$. By (I) the point $q_i$ lies above the
-two anchors whose colours are the elements of $[3]\setminus\{i\}$, so
+two anchors whose colours are the elements of $3\setminus\{i\}$, so
 \[
 d(q_i)=i\qquad(i<3).
 \]
@@ -1774,25 +1713,19 @@ d(v_x)=f(x) & b_x & c_x & p_x & r_x & s_x\\\hline
 We check that $d$ is proper. The comparable pairs are those listed in
 (I)--(V) together with $e_j<t_j^{\,2}$. For (I), $d(e_j)=j\neq i=d(q_i)$. For
 (V) and $e_j<t_j^{\,2}$, the three points $e_j,t_j^{\,1},t_j^{\,2}$ receive the
-three distinct values $j,\pi_j(1),\pi_j(2)$. For (II), (III) and (IV) one reads
-off the table. If $f(x)=0$ the fibre colours are
-$(v_x,b_x,c_x,p_x,r_x,s_x)=(0,0,2,0,1,2)$ and $d(v_{T(x)})=1$, so the pairs
-of (II) are $0\!\neq\!2$, $0\!\neq\!1$, $2\!\neq\!0$; those of (III) are
-$1\!\neq\!0$, $2\!\neq\!1$, $0\!\neq\!2$; and those of (IV) are $0\!\neq\!1$,
-$1\!\neq\!0$, $1\!\neq\!2$, $0\!\neq\!1$, $0\!\neq\!2$, $2\!\neq\!0$,
-$2\!\neq\!1$. If $f(x)=1$ the fibre colours are $(1,2,1,2,0,1)$ and
-$d(v_{T(x)})=0$, and the same lists read $1\!\neq\!2$, $2\!\neq\!1$,
-$1\!\neq\!0$; $1\!\neq\!2$, $2\!\neq\!0$, $0\!\neq\!1$; and $1\!\neq\!0$,
-$0\!\neq\!2$, $0\!\neq\!1$, $2\!\neq\!0$, $2\!\neq\!1$, $1\!\neq\!2$,
-$1\!\neq\!0$. In both cases $d$ is proper, and $d(e_i)=i$ together with
-$d(t_j^{\,n})=\pi_j(n)$ gives $d^{-1}(\{i\})\supseteq E_i$. So
-$A_i=d^{-1}(\{i\})$ is an extension, and $\mathrm{(FE)}_3$ follows by
-restriction, or by Proposition~\ref{prop:compactness}.
+three distinct values $j,\pi_j(1),\pi_j(2)$. The entries in the table
+lie in the colour domains imposed by (II) and (III), and direct
+inspection gives different colours at the endpoints of each relation
+in (IV). For the two relations involving $v_{T(x)}$, use
+$d(v_{T(x)})=f(T(x))=1-f(x)$; it differs from both $d(p_x)$ and
+$d(s_x)$ in each row. Thus $d$ is proper. Since
+$d(e_i)=i$ and $d(t_j^{\,n})=\pi_j(n)$, its colour classes extend
+$E_0,E_1,E_2$. Restriction gives $\mathrm{(FE)}_3$.
 
 \emph{(ii).} Fix $j<3$. The chain $e_j<t_j^{\,1}<t_j^{\,2}$ has three
 elements and meets $E_j$ in $e_j$ and each $E_i$ with $i\neq j$ in the single
 point $t_j^{\,\pi_j^{-1}(i)}$. This one chain witnesses $\mathrm{(AS)}$ for
-$e_j$ and for both saturating points above $e_j$; as $j$ ranges over $[3]$ all
+$e_j$ and for both saturating points above $e_j$; as $j$ ranges over $3$ all
 nine points of $E_0\cup E_1\cup E_2$ are covered.
 
 \emph{Failure of $\mathrm{(AD)}$.} Take $t=1$, so $I_1=\{1,2\}$, and
@@ -1848,63 +1781,6 @@ patterns realised in Figure~\ref{fig:saturation} are exactly what obstructs
 it.
 \end{remark}
 
-\section{Preserving the saturation template}
-\label{sec:preserve-template}
-
-The chain prescription problem is settled by
-Corollary~\ref{list-cor:prescription}: for every finite $n$, the condition
-$\mathrm{(FE)}_n$ is necessary and sufficient, and the prescribed chains
-may be arbitrary Borel sets. Unlike the antichain example in the preceding
-section, no additional anchor saturation is required.
-We finish by returning to the finite template that motivated the question.
-
-\begin{corollary}\label{cor:preserve-locked}
-Let $P$ be a Borel partial order of finite width, fix $r\ge1$, and let
-$U,V,S,\mathcal E$ be as in \S\ref{sec:saturation}, applied to the
-incomparability graph of $P$. In particular, $\mathcal E$ is a locked
-chain template on the finite set $S$.
-There is a finite Borel chain partition $\mathcal C$ of $X$ which extends
-$\mathcal E$ and is simultaneously $r$- and $(r+1)$-saturated.
-\end{corollary}
-
-\begin{proof}
-Let $E_0,\ldots,E_{\ell-1}$ be the active blocks of $\mathcal E$ and put
-\[
-Y=(X\setminus S)\cup\bigcup_{i<\ell}E_i.
-\]
-If $\ell=0$, Lemma~\ref{lem:active-decomposition} gives $X=S$, and the
-claim follows from \eqref{eq:template-norms}.
-Suppose $\ell>0$. For every finite $F\subseteq X\setminus S$,
-Lemma~\ref{lem:active-decomposition} partitions $F$ into sets $F_i$ such
-that each $E_i\cup F_i$ is a chain. Consequently the prescription
-$E_0,\ldots,E_{\ell-1}$ on $Y$ satisfies $\mathrm{(FE)}_\ell$.
-By Corollary~\ref{list-cor:prescription}, there are Borel chains
-\[
-Y=C_0\sqcup\cdots\sqcup C_{\ell-1},\qquad E_i\subseteq C_i.
-\]
-Since $Y\cap S=\bigcup_{i<\ell}E_i$ and the parts are disjoint,
-$C_i\cap S=E_i$. Retain every inactive block of $\mathcal E$ as a separate
-part. The resulting finite Borel chain partition $\mathcal C$ therefore
-extends $\mathcal E$.
-For $t\in\{r,r+1\}$, every active block has at least $t$ elements by
-Lemma~\ref{lem:active-points}. Thus $|C_i|\wedge t=|E_i|\wedge t=t$,
-and the inactive parts are unchanged. Equation~\eqref{eq:template-norms}
-now gives
-\[
-\lVert\mathcal C\rVert_r=\alpha_r(X),\qquad
-\lVert\mathcal C\rVert_{r+1}=\alpha_{r+1}(X).
-\qedhere
-\]
-\end{proof}
-
-The proof of Theorem~\ref{list-thm:main} does not derive anchored
-decomposition from finite extension, or require an arbitrary first chain
-to leave the remaining prescription feasible. It refines all lists
-simultaneously. At each refinement, a full joint solution certifies the
-new restrictions before they are enlarged to Borel forbidden-colour sets.
-This is why the theorem preserves labels even when a sequential puncturing
-argument would lose the finite extension condition on the complement.
-
 \begin{thebibliography}{99}
 
 \bibitem{AharoniKorman1992}
@@ -1912,27 +1788,10 @@ R.~Aharoni and V.~Korman,
 \emph{Greene--Kleitman's theorem for infinite posets},
 Order \textbf{9} (1992), 245--253.
 
-\bibitem{Berge1961}
-C.~Berge,
-\emph{F\"arbung von Graphen, deren s\"amtliche bzw.\ deren ungerade Kreise
-starr sind},
-Wiss.\ Z.\ Martin-Luther-Univ.\ Halle-Wittenberg (1961), 114--115.
-
-\bibitem{Berge1982}
-C.~Berge,
-\emph{$k$-optimal partitions of a directed graph},
-European J. Combin. \textbf{3} (1982), 97--101.
-
 \bibitem{Burgess1979}
 J.~P.~Burgess,
 \emph{Effective enumeration of classes in a $\Sigma^1_1$ equivalence relation},
 Indiana Univ. Math. J. \textbf{28} (1979), no.~3, 353--364.
-
-\bibitem{Cameron1986}
-K.~Cameron,
-\emph{On $k$-optimum dipath partitions and partial $k$-colourings of acyclic
-digraphs},
-European J. Combin. \textbf{7} (1986), 115--118.
 
 \bibitem{CarroyMillerVidnyanszky2021}
 R.~Carroy, B.~D.~Miller and Z.~Vidny\'anszky,
@@ -1943,11 +1802,6 @@ J. Math. Log. \textbf{21} (2021), no.~2, 2150005.
 R.~P.~Dilworth,
 \emph{A decomposition theorem for partially ordered sets},
 Ann. of Math. \textbf{51} (1950), 161--166.
-
-\bibitem{Frank1980}
-A.~Frank,
-\emph{On chain and antichain families of a partially ordered set},
-J. Combin. Theory Ser. B \textbf{29} (1980), 176--184.
 
 \bibitem{Gao2009}
 S.~Gao,
@@ -1990,31 +1844,10 @@ A.~S.~Kechris, S.~Solecki and S.~Todorcevic,
 \emph{Borel chromatic numbers},
 Adv. Math. \textbf{141} (1999), no.~1, 1--44.
 
-\bibitem{Linial1981}
-N.~Linial,
-\emph{Extending the Greene--Kleitman theorem to directed graphs},
-J. Combin. Theory Ser. A \textbf{30} (1981), 331--334.
-
-\bibitem{Lovasz1972}
-L.~Lov\'asz,
-\emph{Normal hypergraphs and the perfect graph conjecture},
-Discrete Math. \textbf{2} (1972), 253--267.
-
-\bibitem{Miller2012}
-B.~D.~Miller,
-\emph{The graph-theoretic approach to descriptive set theory},
-Bull. Symbolic Logic \textbf{18} (2012), 554--575.
-
 \bibitem{Mirsky1971}
 L.~Mirsky,
 \emph{A dual of Dilworth's decomposition theorem},
 Amer. Math. Monthly \textbf{78} (1971), 876--877.
-
-\bibitem{Saks1979}
-M.~Saks,
-\emph{A short proof of the existence of $k$-saturated partitions of partially
-ordered sets},
-Adv. in Math. \textbf{33} (1979), 207--211.
 
 \end{thebibliography}
 
