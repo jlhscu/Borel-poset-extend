@@ -4,6 +4,11 @@ Date: 2026-09-28. Repository: `jlhscu/Borel-poset-extend`, branch `main`.
 
 Read together with `Working_Memo.md`, especially Sections 2, 8, and 17. The earlier memo and `main.tex` are preserved unchanged. This continuation records proved results, not a claimed solution of the unrestricted problem.
 
+**Later status (2026-09-29):** The unrestricted chain problem identified
+below has since been resolved in main.tex by the Borel finite-list
+extension theorem. This file records the intermediate results from
+2026-09-28; see the current-status note in Working_Memo.md.
+
 ## Status
 
 The unrestricted width-three and width-n FE + AS prescription problems remain unresolved in this continuation. The following results are proved here:
